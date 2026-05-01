@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07D36DAA-6684-4F18-867D-D69B1FAA2FDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{C2D6DAB3-5209-410E-B796-B7E5EC569701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Domain", "src\UserService\UserService.Domain\UserService.Domain.csproj", "{69D7D351-1F2C-4B83-9D53-E768BABAD14A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FinanceService", "FinanceService", "{3D95E149-E35C-4B67-AA25-E2FB27E1731D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Domain", "src\FinanceService\FinanceService.Domain\FinanceService.Domain.csproj", "{055DCAC4-E868-47F1-B2E4-898BA63507B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69D7D351-1F2C-4B83-9D53-E768BABAD14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D7D351-1F2C-4B83-9D53-E768BABAD14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D7D351-1F2C-4B83-9D53-E768BABAD14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D7D351-1F2C-4B83-9D53-E768BABAD14A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2D6DAB3-5209-410E-B796-B7E5EC569701} = {07D36DAA-6684-4F18-867D-D69B1FAA2FDC}
+		{69D7D351-1F2C-4B83-9D53-E768BABAD14A} = {C2D6DAB3-5209-410E-B796-B7E5EC569701}
+		{3D95E149-E35C-4B67-AA25-E2FB27E1731D} = {07D36DAA-6684-4F18-867D-D69B1FAA2FDC}
+		{055DCAC4-E868-47F1-B2E4-898BA63507B7} = {3D95E149-E35C-4B67-AA25-E2FB27E1731D}
+	EndGlobalSection
+EndGlobal
