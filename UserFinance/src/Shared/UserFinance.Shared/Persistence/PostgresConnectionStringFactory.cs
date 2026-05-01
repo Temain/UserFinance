@@ -1,5 +1,7 @@
 using Npgsql;
 
+namespace UserFinance.Shared.Persistence;
+
 public static class PostgresConnectionStringFactory
 {
     public static string Create(PostgresOptions options)

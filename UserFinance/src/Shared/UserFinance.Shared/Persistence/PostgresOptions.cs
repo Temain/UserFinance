@@ -1,3 +1,5 @@
+namespace UserFinance.Shared.Persistence;
+
 public sealed class PostgresOptions
 {
     public string Host { get; set; } = string.Empty;
