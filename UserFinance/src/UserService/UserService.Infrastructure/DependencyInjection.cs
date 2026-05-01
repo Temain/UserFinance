@@ -1,8 +1,11 @@
 using UserService.Abstractions.Repositories;
+using UserService.Abstractions.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Infrastructure.Options;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Repositories;
+using UserService.Infrastructure.Security;
 
 namespace UserService.Infrastructure;
 
@@ -17,6 +20,15 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserCurrencyRepository, UserCurrencyRepository>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddUserSecurity(this IServiceCollection services, JwtOptions jwtOptions)
+    {
+        services.AddSingleton(jwtOptions);
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
         return services;
     }
