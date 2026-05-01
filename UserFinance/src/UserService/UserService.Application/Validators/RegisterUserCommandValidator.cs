@@ -7,7 +7,10 @@ public sealed class RegisterUserCommandValidator : AbstractValidator<RegisterUse
 {
     public RegisterUserCommandValidator()
     {
-        RuleFor(command => command.Name).NotEmpty().MaximumLength(200);
-        RuleFor(command => command.Password).NotEmpty().MaximumLength(200);
+        RuleFor(command => command.Name).NotEmpty().WithMessage("User name is required.")
+            .MaximumLength(200).WithMessage("User name must not be longer than 200 characters.");
+
+        RuleFor(command => command.Password).NotEmpty().WithMessage("Password is required.")
+            .MaximumLength(200).WithMessage("Password must not be longer than 200 characters.");
     }
 }

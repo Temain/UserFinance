@@ -7,7 +7,7 @@ public sealed class GetUserCurrencyRateQueryValidator : AbstractValidator<GetUse
 {
     public GetUserCurrencyRateQueryValidator()
     {
-        RuleFor(query => query.UserId).GreaterThan(0);
-        RuleFor(query => query.CurrencyId).GreaterThan(0);
+        RuleFor(query => query.UserId).GreaterThan(0).WithMessage("User id must be greater than zero.");
+        RuleFor(query => query.CurrencyId).GreaterThan(0).WithMessage("Currency id must be greater than zero.");
     }
 }
