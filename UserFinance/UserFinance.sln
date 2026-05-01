@@ -1,7 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
+#
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07D36DAA-6684-4F18-867D-D69B1FAA2FDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9B4C11A-6599-4594-BE0F-41E77A8FA755}"
+	ProjectSection(SolutionItems) = preProject
+		.env.example = .env.example
+		.envrc.example = .envrc.example
+		docker-compose.yml = docker-compose.yml
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{C2D6DAB3-5209-410E-B796-B7E5EC569701}"
 EndProject
@@ -9,11 +17,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Domain", "src\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure", "src\UserService\UserService.Infrastructure\UserService.Infrastructure.csproj", "{649C5D8D-4505-4DCC-BB32-988C739813C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Migrations", "src\UserService\UserService.Migrations\UserService.Migrations.csproj", "{67B22D90-0DFD-4B0E-9360-F7B8B6B243A6}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FinanceService", "FinanceService", "{3D95E149-E35C-4B67-AA25-E2FB27E1731D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Domain", "src\FinanceService\FinanceService.Domain\FinanceService.Domain.csproj", "{055DCAC4-E868-47F1-B2E4-898BA63507B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Infrastructure", "src\FinanceService\FinanceService.Infrastructure\FinanceService.Infrastructure.csproj", "{027CCF4E-B3FD-4165-8A7D-7E46C83F5543}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationService", "MigrationService", "{558CC3BB-6435-40A5-947D-639F6A66881E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationService", "src\MigrationService\MigrationService\MigrationService.csproj", "{A00A9514-32DB-42D1-BE64-28B43E7B9FF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Migrations", "src\FinanceService\FinanceService.Migrations\FinanceService.Migrations.csproj", "{AE397592-B00B-47B9-8A58-3BF4C6811F48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{7852B2D0-E0A7-4A0C-9CA7-F8978B73A0BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFinance.Configuration", "src\Shared\UserFinance.Configuration\UserFinance.Configuration.csproj", "{A7D8892B-ECE5-4A84-8F82-8C69465DB15A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +49,10 @@ Global
 		{649C5D8D-4505-4DCC-BB32-988C739813C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649C5D8D-4505-4DCC-BB32-988C739813C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649C5D8D-4505-4DCC-BB32-988C739813C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B22D90-0DFD-4B0E-9360-F7B8B6B243A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B22D90-0DFD-4B0E-9360-F7B8B6B243A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B22D90-0DFD-4B0E-9360-F7B8B6B243A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B22D90-0DFD-4B0E-9360-F7B8B6B243A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{055DCAC4-E868-47F1-B2E4-898BA63507B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,13 +61,31 @@ Global
 		{027CCF4E-B3FD-4165-8A7D-7E46C83F5543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{027CCF4E-B3FD-4165-8A7D-7E46C83F5543}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{027CCF4E-B3FD-4165-8A7D-7E46C83F5543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A00A9514-32DB-42D1-BE64-28B43E7B9FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A00A9514-32DB-42D1-BE64-28B43E7B9FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A00A9514-32DB-42D1-BE64-28B43E7B9FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A00A9514-32DB-42D1-BE64-28B43E7B9FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE397592-B00B-47B9-8A58-3BF4C6811F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE397592-B00B-47B9-8A58-3BF4C6811F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE397592-B00B-47B9-8A58-3BF4C6811F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE397592-B00B-47B9-8A58-3BF4C6811F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D8892B-ECE5-4A84-8F82-8C69465DB15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D8892B-ECE5-4A84-8F82-8C69465DB15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D8892B-ECE5-4A84-8F82-8C69465DB15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D8892B-ECE5-4A84-8F82-8C69465DB15A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C2D6DAB3-5209-410E-B796-B7E5EC569701} = {07D36DAA-6684-4F18-867D-D69B1FAA2FDC}
 		{69D7D351-1F2C-4B83-9D53-E768BABAD14A} = {C2D6DAB3-5209-410E-B796-B7E5EC569701}
 		{649C5D8D-4505-4DCC-BB32-988C739813C4} = {C2D6DAB3-5209-410E-B796-B7E5EC569701}
+		{67B22D90-0DFD-4B0E-9360-F7B8B6B243A6} = {C2D6DAB3-5209-410E-B796-B7E5EC569701}
 		{3D95E149-E35C-4B67-AA25-E2FB27E1731D} = {07D36DAA-6684-4F18-867D-D69B1FAA2FDC}
 		{055DCAC4-E868-47F1-B2E4-898BA63507B7} = {3D95E149-E35C-4B67-AA25-E2FB27E1731D}
 		{027CCF4E-B3FD-4165-8A7D-7E46C83F5543} = {3D95E149-E35C-4B67-AA25-E2FB27E1731D}
+		{558CC3BB-6435-40A5-947D-639F6A66881E} = {07D36DAA-6684-4F18-867D-D69B1FAA2FDC}
+		{A00A9514-32DB-42D1-BE64-28B43E7B9FF7} = {558CC3BB-6435-40A5-947D-639F6A66881E}
+		{AE397592-B00B-47B9-8A58-3BF4C6811F48} = {3D95E149-E35C-4B67-AA25-E2FB27E1731D}
+		{7852B2D0-E0A7-4A0C-9CA7-F8978B73A0BA} = {07D36DAA-6684-4F18-867D-D69B1FAA2FDC}
+		{A7D8892B-ECE5-4A84-8F82-8C69465DB15A} = {7852B2D0-E0A7-4A0C-9CA7-F8978B73A0BA}
 	EndGlobalSection
 EndGlobal

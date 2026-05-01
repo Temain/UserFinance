@@ -8,7 +8,10 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddUserPersistence(this IServiceCollection services, string connectionString)
     {
-        services.AddDbContextPool<UserDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContextPool<UserDbContext>(options =>
+            options.UseNpgsql(connectionString, npgsql =>
+                npgsql.MigrationsAssembly("UserService.Migrations")
+                    .MigrationsHistoryTable("__EFMigrationsHistory_User")));
 
         return services;
     }

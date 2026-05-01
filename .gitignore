@@ -40,7 +40,8 @@ publish/
 *.azurePubxml
 
 # Local environment and secrets
-*.env
+.env
+.envrc
 appsettings.Local.json
 appsettings.*.local.json
 secrets.json
