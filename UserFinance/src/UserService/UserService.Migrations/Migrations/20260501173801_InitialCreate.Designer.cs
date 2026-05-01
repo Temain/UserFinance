@@ -28,6 +28,9 @@ namespace UserService.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                         .HasColumnName("id");
 
                     b.Property<string>("Name")

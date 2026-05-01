@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using UserService.Abstractions.Repositories;
 using UserService.Domain.Entities;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Repositories;
 
-public sealed class UserCurrencyRepository(UserDbContext dbContext)
+public sealed class UserCurrencyRepository(UserDbContext dbContext) : IUserCurrencyRepository
 {
     public Task<List<UserCurrency>> GetByUserIdAsync(long userId, CancellationToken cancellationToken = default)
     {

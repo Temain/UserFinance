@@ -10,13 +10,8 @@ public sealed class User
     {
     }
 
-    public User(long id, string name, string password)
+    public User(string name, string password)
     {
-        if (id <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(id), "User id must be greater than zero.");
-        }
-
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ArgumentException("User name is required.", nameof(name));
@@ -27,7 +22,6 @@ public sealed class User
             throw new ArgumentException("Password is required.", nameof(password));
         }
 
-        Id = id;
         Name = name.Trim();
         Password = password.Trim();
     }

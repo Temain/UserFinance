@@ -1,3 +1,4 @@
+using UserService.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Infrastructure.Persistence;
@@ -13,9 +14,9 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString, npgsql =>
                 npgsql.MigrationsAssembly("UserService.Migrations")
                     .MigrationsHistoryTable("__EFMigrationsHistory_User")));
-        
-        services.AddScoped<UserRepository>();
-        services.AddScoped<UserCurrencyRepository>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserCurrencyRepository, UserCurrencyRepository>();
 
         return services;
     }

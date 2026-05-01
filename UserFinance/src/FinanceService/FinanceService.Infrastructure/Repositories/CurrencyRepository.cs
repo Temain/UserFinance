@@ -1,10 +1,11 @@
+using FinanceService.Abstractions.Repositories;
 using FinanceService.Domain.Entities;
 using FinanceService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceService.Infrastructure.Repositories;
 
-public sealed class CurrencyRepository(FinanceDbContext dbContext)
+public sealed class CurrencyRepository(FinanceDbContext dbContext) : ICurrencyRepository
 {
     public Task<Currency?> GetByIdAsync(int currencyId, CancellationToken cancellationToken = default)
     {
@@ -13,8 +14,7 @@ public sealed class CurrencyRepository(FinanceDbContext dbContext)
             .FirstOrDefaultAsync(currency => currency.Id == currencyId, cancellationToken);
     }
 
-    public Task<List<Currency>> GetByIdsAsync(
-        IReadOnlyCollection<int> currencyIds,
+    public Task<List<Currency>> GetByIdsAsync(IReadOnlyCollection<int> currencyIds, 
         CancellationToken cancellationToken = default)
     {
         if (currencyIds.Count == 0)

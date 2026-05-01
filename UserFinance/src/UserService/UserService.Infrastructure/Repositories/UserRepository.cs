@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using UserService.Abstractions.Repositories;
 using UserService.Domain.Entities;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Repositories;
 
-public sealed class UserRepository(UserDbContext dbContext)
+public sealed class UserRepository(UserDbContext dbContext) : IUserRepository
 {
     public Task<User?> GetByIdAsync(long userId, CancellationToken cancellationToken = default)
     {
