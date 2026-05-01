@@ -1,4 +1,5 @@
 using FinanceService.Infrastructure.Persistence;
+using FinanceService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,8 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString, npgsql =>
                 npgsql.MigrationsAssembly("FinanceService.Migrations")
                     .MigrationsHistoryTable("__EFMigrationsHistory_Finance")));
+        
+        services.AddScoped<CurrencyRepository>();
 
         return services;
     }
