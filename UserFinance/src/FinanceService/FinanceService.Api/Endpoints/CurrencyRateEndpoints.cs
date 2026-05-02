@@ -3,7 +3,6 @@ using FinanceService.Api.Responses;
 using FinanceService.Application.Queries;
 using MediatR;
 using UserFinance.Common.Extensions;
-using UserFinance.Common.Security;
 
 namespace FinanceService.Api.Endpoints;
 
@@ -15,31 +14,19 @@ public static class CurrencyRateEndpoints
             .RequireAuthorization();
 
         group.MapGet(string.Empty,
-            async (long userId, ICurrentUserAccessor currentUserAccessor, ISender sender,
-                CancellationToken cancellationToken) =>
+            async (long userId, ISender sender, CancellationToken cancellationToken) =>
             {
-                if (!currentUserAccessor.HasAccessTo(userId))
-                {
-                    return Results.Forbid();
-                }
-
                 var currencyRates = await sender.Send(new GetUserCurrenciesRatesQuery(userId), cancellationToken);
                 var response = currencyRates
                     .Select(currencyRate => new CurrencyRateResponse(currencyRate.CurrencyId,
                         currencyRate.CurrencyName, currencyRate.Rate));
 
                 return Results.Ok(response);
-            });
+            }).RequireCurrentUserAccess();
 
         group.MapGet("/{currencyId:int}",
-            async (long userId, int currencyId, ICurrentUserAccessor currentUserAccessor, ISender sender,
-                CancellationToken cancellationToken) =>
+            async (long userId, int currencyId, ISender sender, CancellationToken cancellationToken) =>
             {
-                if (!currentUserAccessor.HasAccessTo(userId))
-                {
-                    return Results.Forbid();
-                }
-
                 var currencyRate = await sender.Send(new GetUserCurrencyRateQuery(userId, currencyId),
                     cancellationToken);
 
@@ -47,7 +34,7 @@ public static class CurrencyRateEndpoints
                     ? Results.NotFound()
                     : Results.Ok(new CurrencyRateResponse(currencyRate.CurrencyId, currencyRate.CurrencyName,
                         currencyRate.Rate));
-            });
+            }).RequireCurrentUserAccess();
 
         return endpoints;
     }

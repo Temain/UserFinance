@@ -1,7 +1,6 @@
 using FluentValidation;
 using MediatR;
 using UserFinance.Common.Extensions;
-using UserFinance.Common.Security;
 using UserService.Api.Extensions;
 using UserService.Api.Requests;
 using UserService.Api.Responses;
@@ -29,17 +28,11 @@ public static class UserEndpoints
             });
 
         group.MapGet("/{userId}",
-            async (long userId, ICurrentUserAccessor currentUserAccessor, ISender sender,
-                CancellationToken cancellationToken) =>
+            async (long userId, ISender sender, CancellationToken cancellationToken) =>
             {
-                if (!currentUserAccessor.HasAccessTo(userId))
-                {
-                    return Results.Forbid();
-                }
-
                 var user = await sender.Send(new GetUserByIdQuery(userId), cancellationToken);
                 return user is null ? Results.NotFound() : Results.Ok(new UserResponse(user.Id, user.Name));
-            }).RequireAuthorization();
+            }).RequireAuthorization().RequireCurrentUserAccess();
 
         return group;
     }
