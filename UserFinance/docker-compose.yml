@@ -77,5 +77,22 @@ services:
       user-service:
         condition: service_started
 
+  currency-updater:
+    build:
+      context: .
+      dockerfile: src/CurrencyUpdater/CurrencyUpdater.Worker/Dockerfile
+    container_name: userfinance-currency-updater
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      CBR_DAILY_RATES_URL: ${CBR_DAILY_RATES_URL:-https://www.cbr.ru/scripts/XML_daily.asp}
+      CURRENCY_UPDATER_INTERVAL_MINUTES: ${CURRENCY_UPDATER_INTERVAL_MINUTES:-60}
+    depends_on:
+      finance-service:
+        condition: service_started
+
 volumes:
   postgres-data:

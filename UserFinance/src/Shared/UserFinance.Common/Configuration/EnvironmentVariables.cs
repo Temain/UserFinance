@@ -15,4 +15,6 @@ public static class EnvironmentVariables
     public const string UserServiceUrl = "USER_SERVICE_URL";
     public const string UserServiceCurrenciesPath = "USER_SERVICE_CURRENCIES_PATH";
     public const string FinanceServicePort = "FINANCE_SERVICE_PORT";
+    public const string CbrDailyRatesUrl = "CBR_DAILY_RATES_URL";
+    public const string CurrencyUpdaterIntervalMinutes = "CURRENCY_UPDATER_INTERVAL_MINUTES";
 }

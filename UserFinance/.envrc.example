@@ -11,3 +11,5 @@ export USER_SERVICE_PORT=8081
 export USER_SERVICE_URL=http://localhost:8081
 export USER_SERVICE_CURRENCIES_PATH=/api/users/{userId}/currencies
 export FINANCE_SERVICE_PORT=8082
+export CBR_DAILY_RATES_URL=https://www.cbr.ru/scripts/XML_daily.asp
+export CURRENCY_UPDATER_INTERVAL_MINUTES=60

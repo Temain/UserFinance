@@ -1,6 +1,12 @@
 # UserFinance
 Микросервисная платформа на .NET 8 с Clean Architecture и CQRS для управления пользователями и получения персонализированных курсов валют с автоматическим обновлением данных из внешнего источника.
 
+Сервисы:
+- `migration-service`
+- `user-service`
+- `finance-service`
+- `currency-updater`
+
 ### Docker Compose
 1. Перейдите в папку решения:
    `cd UserFinance`

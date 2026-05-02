@@ -1,12 +1,12 @@
-namespace FinanceService.Domain.Entities;
+namespace CurrencyUpdater.Infrastructure.Persistence;
 
-public sealed class Currency
+public sealed class CurrencyRecord
 {
-    private Currency()
+    private CurrencyRecord()
     {
     }
 
-    public Currency(int id, string name, decimal rate)
+    public CurrencyRecord(int id, string name, decimal rate)
     {
         if (id <= 0)
         {
@@ -33,4 +33,20 @@ public sealed class Currency
     public string Name { get; private set; } = null!;
 
     public decimal Rate { get; private set; }
+
+    public void Update(string name, decimal rate)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Currency name is required.", nameof(name));
+        }
+
+        if (rate <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(rate), "Currency rate must be greater than zero.");
+        }
+
+        Name = name.Trim();
+        Rate = rate;
+    }
 }
