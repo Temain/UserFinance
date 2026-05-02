@@ -4,5 +4,12 @@ namespace CurrencyUpdater.Application.Abstractions;
 
 public interface ICurrencyWriteRepository
 {
-    Task UpsertAsync(IReadOnlyCollection<CurrencyRateDto> currencyRates, CancellationToken cancellationToken = default);
+    Task<IReadOnlyDictionary<int, CurrencyRateDto>> GetByIdsAsync(IReadOnlyCollection<int> currencyIds,
+        CancellationToken cancellationToken = default);
+
+    void AddRange(IEnumerable<CurrencyRateDto> currencyRates);
+
+    void UpdateRange(IEnumerable<CurrencyRateDto> currencyRates);
+
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

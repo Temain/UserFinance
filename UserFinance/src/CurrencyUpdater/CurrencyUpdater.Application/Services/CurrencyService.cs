@@ -15,10 +15,28 @@ public sealed class CurrencyService(
 
         var xml = await currencyRatesProvider.GetDailyRatesAsync(cancellationToken);
         var currencyRates = currencyRatesParser.Parse(xml);
+        var currencyIds = currencyRates.Select(currency => currency.CurrencyId).ToArray();
+        var existingCurrencies = await currencyWriteRepository.GetByIdsAsync(currencyIds, cancellationToken);
+        var newCurrencies = currencyRates
+            .Where(currency => !existingCurrencies.ContainsKey(currency.CurrencyId))
+            .ToArray();
+        var updatedCurrencies = currencyRates
+            .Where(currency => existingCurrencies.ContainsKey(currency.CurrencyId))
+            .ToArray();
 
         logger.LogInformation("Parsed {CurrencyCount} currency rates.", currencyRates.Count);
 
-        await currencyWriteRepository.UpsertAsync(currencyRates, cancellationToken);
+        if (newCurrencies.Length > 0)
+        {
+            currencyWriteRepository.AddRange(newCurrencies);
+        }
+
+        if (updatedCurrencies.Length > 0)
+        {
+            currencyWriteRepository.UpdateRange(updatedCurrencies);
+        }
+
+        await currencyWriteRepository.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation("Currency rates updated successfully.");
     }

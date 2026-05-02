@@ -1,37 +1,48 @@
 using CurrencyUpdater.Application.Abstractions;
 using CurrencyUpdater.Application.Models;
-using Microsoft.EntityFrameworkCore;
 using CurrencyUpdater.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyUpdater.Infrastructure.Repositories;
 
 public sealed class CurrencyWriteRepository(CurrencyUpdateDbContext dbContext) : ICurrencyWriteRepository
 {
-    public async Task UpsertAsync(IReadOnlyCollection<CurrencyRateDto> currencyRates,
+    public async Task<IReadOnlyDictionary<int, CurrencyRateDto>> GetByIdsAsync(IReadOnlyCollection<int> currencyIds,
         CancellationToken cancellationToken = default)
     {
-        if (currencyRates.Count == 0)
+        if (currencyIds.Count == 0)
         {
-            return;
+            return new Dictionary<int, CurrencyRateDto>();
         }
 
-        var currencyIds = currencyRates.Select(currency => currency.CurrencyId).ToArray();
-        var existingCurrencies = await dbContext.Currencies
+        return await dbContext.Currencies
+            .AsNoTracking()
             .Where(currency => currencyIds.Contains(currency.Id))
-            .ToDictionaryAsync(currency => currency.Id, cancellationToken);
+            .ToDictionaryAsync(currency => currency.Id,
+                currency => new CurrencyRateDto(currency.Id, currency.Name, currency.Rate), cancellationToken);
+    }
 
+    public void AddRange(IEnumerable<CurrencyRateDto> currencyRates)
+    {
+        var currencies = currencyRates
+            .Select(currency => new CurrencyRecord(currency.CurrencyId, currency.CurrencyName, currency.Rate))
+            .ToArray();
+
+        dbContext.Currencies.AddRange(currencies);
+    }
+
+    public void UpdateRange(IEnumerable<CurrencyRateDto> currencyRates)
+    {
         foreach (var currencyRate in currencyRates)
         {
-            if (existingCurrencies.TryGetValue(currencyRate.CurrencyId, out var existingCurrency))
-            {
-                existingCurrency.Update(currencyRate.CurrencyName, currencyRate.Rate);
-                continue;
-            }
-
-            dbContext.Currencies.Add(
-                new CurrencyRecord(currencyRate.CurrencyId, currencyRate.CurrencyName, currencyRate.Rate));
+            var currency = new CurrencyRecord(currencyRate.CurrencyId, currencyRate.CurrencyName, currencyRate.Rate);
+            dbContext.Currencies.Attach(currency);
+            dbContext.Entry(currency).State = EntityState.Modified;
         }
+    }
 
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -1,9 +1,12 @@
+using System.Text;
 using CurrencyUpdater.Application;
 using CurrencyUpdater.Infrastructure;
 using CurrencyUpdater.Worker.Extensions;
 using CurrencyUpdater.Worker.HostedServices;
 using UserFinance.Common.Configuration;
 using UserFinance.Common.Persistence;
+
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 var builder = Host.CreateApplicationBuilder(args);
 var postgresOptions = builder.Configuration.GetPostgresOptions();

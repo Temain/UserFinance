@@ -1,5 +1,6 @@
-using CurrencyUpdater.Application.Services;
+using CurrencyUpdater.Application.Commands;
 using CurrencyUpdater.Worker.Options;
+using MediatR;
 using Microsoft.Extensions.Options;
 
 namespace CurrencyUpdater.Worker.HostedServices;
@@ -26,8 +27,8 @@ public sealed class CurrencyUpdateBackgroundService(
         try
         {
             using var scope = serviceScopeFactory.CreateScope();
-            var currencyService = scope.ServiceProvider.GetRequiredService<ICurrencyService>();
-            await currencyService.UpdateAsync(cancellationToken);
+            var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+            await sender.Send(new UpdateCurrenciesCommand(), cancellationToken);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {

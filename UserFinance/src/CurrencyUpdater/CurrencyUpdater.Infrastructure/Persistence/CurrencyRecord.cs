@@ -33,20 +33,4 @@ public sealed class CurrencyRecord
     public string Name { get; private set; } = null!;
 
     public decimal Rate { get; private set; }
-
-    public void Update(string name, decimal rate)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("Currency name is required.", nameof(name));
-        }
-
-        if (rate <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(rate), "Currency rate must be greater than zero.");
-        }
-
-        Name = name.Trim();
-        Rate = rate;
-    }
 }
