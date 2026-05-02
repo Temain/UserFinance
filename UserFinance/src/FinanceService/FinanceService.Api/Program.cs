@@ -1,10 +1,10 @@
+using FinanceService.Api.Extensions;
+using FinanceService.Infrastructure;
+using FinanceService.Business;
+using FinanceService.Application;
 using UserFinance.Common.Configuration;
 using UserFinance.Common.Extensions;
 using UserFinance.Common.Persistence;
-using UserService.Api.Extensions;
-using UserService.Application;
-using UserService.Business;
-using UserService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +16,11 @@ builder.Services.AddOpenApiDocumentation();
 builder.Services.AddExceptionHandling();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCurrentUserAccessor();
-builder.Services.AddRequestValidation();
-builder.Services.AddUserApplication();
-builder.Services.AddUserBusiness();
-builder.Services.AddUserPersistence(connectionString);
-builder.Services.AddUserSecurity(jwtOptions);
+builder.Services.AddUserServiceOptions(builder.Configuration);
+builder.Services.AddFinanceApplication();
+builder.Services.AddFinanceBusiness();
+builder.Services.AddFinancePersistence(connectionString);
+builder.Services.AddUserCurrenciesClient();
 builder.Services.AddJwtAuthentication(jwtOptions);
 
 var app = builder.Build();
@@ -31,6 +31,6 @@ app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapUserServiceEndpoints();
+app.MapFinanceServiceEndpoints();
 
 app.Run();

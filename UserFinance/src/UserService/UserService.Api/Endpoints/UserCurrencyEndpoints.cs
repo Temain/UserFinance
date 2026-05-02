@@ -1,9 +1,10 @@
 using FluentValidation;
 using MediatR;
+using UserFinance.Common.Extensions;
+using UserFinance.Common.Security;
 using UserService.Api.Extensions;
 using UserService.Api.Requests;
 using UserService.Api.Responses;
-using UserService.Application.Abstractions.Services;
 using UserService.Application.Commands;
 using UserService.Application.Queries;
 

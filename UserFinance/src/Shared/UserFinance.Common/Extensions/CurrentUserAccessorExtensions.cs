@@ -1,7 +1,7 @@
-using UserService.Application.Abstractions.Services;
-using UserService.Api.Services;
+using Microsoft.Extensions.DependencyInjection;
+using UserFinance.Common.Security;
 
-namespace UserService.Api.Extensions;
+namespace UserFinance.Common.Extensions;
 
 public static class CurrentUserAccessorExtensions
 {

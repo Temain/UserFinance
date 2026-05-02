@@ -11,4 +11,6 @@ public static class EnvironmentVariables
     public const string JwtAudience = "JWT_AUDIENCE";
     public const string JwtSigningKey = "JWT_SIGNING_KEY";
     public const string JwtExpiresInMinutes = "JWT_EXPIRES_IN_MINUTES";
+    public const string UserServiceUrl = "USER_SERVICE_URL";
+    public const string UserServiceCurrenciesPath = "USER_SERVICE_CURRENCIES_PATH";
 }

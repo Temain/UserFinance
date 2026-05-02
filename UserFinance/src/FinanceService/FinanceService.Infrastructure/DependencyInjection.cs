@@ -1,8 +1,12 @@
+using FinanceService.Abstractions.Integrations;
 using FinanceService.Abstractions.Repositories;
+using FinanceService.Infrastructure.Integrations;
+using FinanceService.Infrastructure.Options;
 using FinanceService.Infrastructure.Persistence;
 using FinanceService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace FinanceService.Infrastructure;
 
@@ -16,6 +20,17 @@ public static class DependencyInjection
                     .MigrationsHistoryTable("__EFMigrationsHistory_Finance")));
 
         services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddUserCurrenciesClient(this IServiceCollection services)
+    {
+        services.AddHttpClient<IUserCurrenciesClient, UserCurrenciesHttpClient>((serviceProvider, client) =>
+        {
+            var userServiceOptions = serviceProvider.GetRequiredService<IOptions<UserServiceOptions>>().Value;
+            client.BaseAddress = new Uri(userServiceOptions.BaseUrl);
+        });
 
         return services;
     }

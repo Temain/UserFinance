@@ -54,5 +54,28 @@ services:
       migration-service:
         condition: service_completed_successfully
 
+  finance-service:
+    build:
+      context: .
+      dockerfile: src/FinanceService/FinanceService.Api/Dockerfile
+    container_name: userfinance-finance-service
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_ISSUER: ${JWT_ISSUER:-UserFinance}
+      JWT_AUDIENCE: ${JWT_AUDIENCE:-UserFinance.Client}
+      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY:-super-secret-development-signing-key-12345}
+      JWT_EXPIRES_IN_MINUTES: ${JWT_EXPIRES_IN_MINUTES:-60}
+      USER_SERVICE_URL: http://user-service:8080
+      USER_SERVICE_CURRENCIES_PATH: /api/users/{userId}/currencies
+    ports:
+      - "${FINANCE_SERVICE_PORT:-8082}:8080"
+    depends_on:
+      user-service:
+        condition: service_started
+
 volumes:
   postgres-data:

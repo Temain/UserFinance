@@ -1,9 +1,10 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.DependencyInjection;
 using UserFinance.Common.Security;
 
-namespace UserService.Api.Extensions;
+namespace UserFinance.Common.Extensions;
 
 public static class AuthenticationExtensions
 {
