@@ -1,4 +1,4 @@
-namespace UserFinance.Shared.Persistence;
+namespace UserFinance.Common.Persistence;
 
 public sealed class PostgresOptions
 {

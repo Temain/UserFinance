@@ -3,7 +3,7 @@ WORKDIR /src
 
 COPY ["UserFinance.sln", "./"]
 COPY ["global.json", "./"]
-COPY ["src/Shared/UserFinance.Shared/UserFinance.Shared.csproj", "src/Shared/UserFinance.Shared/"]
+COPY ["src/Shared/UserFinance.Common/UserFinance.Common.csproj", "src/Shared/UserFinance.Common/"]
 COPY ["src/UserService/UserService.Abstractions/UserService.Abstractions.csproj", "src/UserService/UserService.Abstractions/"]
 COPY ["src/UserService/UserService.Domain/UserService.Domain.csproj", "src/UserService/UserService.Domain/"]
 COPY ["src/UserService/UserService.Infrastructure/UserService.Infrastructure.csproj", "src/UserService/UserService.Infrastructure/"]

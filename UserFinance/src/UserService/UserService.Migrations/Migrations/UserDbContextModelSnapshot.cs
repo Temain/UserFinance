@@ -24,11 +24,11 @@ namespace UserService.Migrations.Migrations
             modelBuilder.Entity("UserService.Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy",
-                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace UserFinance.Shared.Application.Pipeline;
+namespace UserFinance.Common.Application.Pipeline;
 
 public sealed class ValidationBehavior<TRequest, TResponse>(
     IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>

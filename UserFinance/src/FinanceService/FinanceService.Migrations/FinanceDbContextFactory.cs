@@ -2,7 +2,7 @@ using FinanceService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Npgsql;
-using UserFinance.Shared.Configuration;
+using UserFinance.Common.Configuration;
 
 namespace FinanceService.Migrations;
 

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UserService.Domain.Entities;
 
 namespace UserService.Infrastructure.Persistence.Configurations;
@@ -15,7 +14,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(user => user.Id)
             .HasColumnName("id")
-            .UseIdentityColumn(); 
+            .UseIdentityColumn();
 
         builder.Property(user => user.Name).HasColumnName("name").HasMaxLength(200).IsRequired();
 

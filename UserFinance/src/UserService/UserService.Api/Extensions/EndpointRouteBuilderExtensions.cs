@@ -6,7 +6,6 @@ public static class EndpointRouteBuilderExtensions
 {
     public static IEndpointRouteBuilder MapUserServiceEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapExceptionEndpoint();
         endpoints.MapAuthEndpoints();
         endpoints.MapUserEndpoints();
         endpoints.MapUserCurrencyEndpoints();

@@ -43,9 +43,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationService", "src\Mig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Migrations", "src\FinanceService\FinanceService.Migrations\FinanceService.Migrations.csproj", "{AE397592-B00B-47B9-8A58-3BF4C6811F48}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{7852B2D0-E0A7-4A0C-9CA7-F8978B73A0BA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7852B2D0-E0A7-4A0C-9CA7-F8978B73A0BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFinance.Shared", "src\Shared\UserFinance.Shared\UserFinance.Shared.csproj", "{6D8DB067-4157-430A-976A-E382A92502A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFinance.Common", "src\Shared\UserFinance.Common\UserFinance.Common.csproj", "{6D8DB067-4157-430A-976A-E382A92502A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Api", "src\UserService\UserService.Api\UserService.Api.csproj", "{876C61E7-2DC3-4DA2-AB34-1366359BE58F}"
 EndProject

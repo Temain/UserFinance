@@ -11,7 +11,7 @@ using UserService.Infrastructure.Persistence;
 namespace UserService.Migrations.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20260501173801_InitialCreate")]
+    [Migration("20260502090808_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace UserService.Migrations.Migrations
             modelBuilder.Entity("UserService.Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy",
-                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -1,6 +1,7 @@
 using UserService.Abstractions.Repositories;
 using UserService.Abstractions.Services;
 using UserService.Domain.Entities;
+using UserService.Domain.Exceptions;
 
 namespace UserService.Business.Services;
 
@@ -21,7 +22,7 @@ public sealed class UserProfileService(IUserRepository userRepository,
     public async Task AddCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
     {
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
-            ?? throw new InvalidOperationException($"User with id '{userId}' was not found.");
+            ?? throw new UserNotFoundException(userId);
 
         user.AddCurrency(currencyId);
         await userRepository.SaveChangesAsync(cancellationToken);
@@ -30,7 +31,7 @@ public sealed class UserProfileService(IUserRepository userRepository,
     public async Task RemoveCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
     {
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
-            ?? throw new InvalidOperationException($"User with id '{userId}' was not found.");
+            ?? throw new UserNotFoundException(userId);
 
         user.RemoveCurrency(currencyId);
         await userRepository.SaveChangesAsync(cancellationToken);

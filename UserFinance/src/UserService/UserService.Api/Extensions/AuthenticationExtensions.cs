@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using UserService.Infrastructure.Options;
+using UserFinance.Common.Security;
 
 namespace UserService.Api.Extensions;
 

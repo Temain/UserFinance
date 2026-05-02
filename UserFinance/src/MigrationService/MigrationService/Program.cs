@@ -2,8 +2,8 @@ using FinanceService.Infrastructure;
 using FinanceService.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using UserFinance.Shared.Configuration;
-using UserFinance.Shared.Persistence;
+using UserFinance.Common.Configuration;
+using UserFinance.Common.Persistence;
 using UserService.Infrastructure;
 using UserService.Infrastructure.Persistence;
 

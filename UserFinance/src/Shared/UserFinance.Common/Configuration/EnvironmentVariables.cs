@@ -1,4 +1,4 @@
-namespace UserFinance.Shared.Configuration;
+namespace UserFinance.Common.Configuration;
 
 public static class EnvironmentVariables
 {

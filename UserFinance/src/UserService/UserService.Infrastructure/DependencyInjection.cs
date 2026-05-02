@@ -2,7 +2,7 @@ using UserService.Abstractions.Repositories;
 using UserService.Abstractions.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using UserService.Infrastructure.Options;
+using UserFinance.Common.Security;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Repositories;
 using UserService.Infrastructure.Security;

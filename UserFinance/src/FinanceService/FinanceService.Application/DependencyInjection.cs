@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using UserFinance.Shared.Application.Pipeline;
+using UserFinance.Common.Application.Pipeline;
 
 namespace FinanceService.Application;
 

@@ -2,8 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using UserFinance.Common.Security;
 using UserService.Abstractions.Security;
-using UserService.Infrastructure.Options;
 
 namespace UserService.Infrastructure.Security;
 

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Npgsql;
-using UserFinance.Shared.Configuration;
+using UserFinance.Common.Configuration;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Migrations;

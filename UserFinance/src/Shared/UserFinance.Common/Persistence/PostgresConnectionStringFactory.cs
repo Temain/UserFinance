@@ -1,6 +1,6 @@
 using Npgsql;
 
-namespace UserFinance.Shared.Persistence;
+namespace UserFinance.Common.Persistence;
 
 public static class PostgresConnectionStringFactory
 {

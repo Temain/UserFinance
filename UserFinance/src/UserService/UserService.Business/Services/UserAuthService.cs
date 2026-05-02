@@ -3,6 +3,7 @@ using UserService.Abstractions.Security;
 using UserService.Abstractions.Models;
 using UserService.Abstractions.Services;
 using UserService.Domain.Entities;
+using UserService.Domain.Exceptions;
 
 namespace UserService.Business.Services;
 
@@ -14,7 +15,7 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
     {
         if (await userRepository.ExistsByNameAsync(name, cancellationToken))
         {
-            throw new InvalidOperationException($"User with name '{name}' already exists.");
+            throw new UserAlreadyExistsException(name);
         }
 
         var user = new User(name, passwordHasher.Hash(password));
@@ -30,11 +31,11 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
         CancellationToken cancellationToken = default)
     {
         var user = await userRepository.GetByNameAsync(name, cancellationToken)
-            ?? throw new InvalidOperationException("Invalid user credentials.");
+            ?? throw new InvalidCredentialsException();
 
         if (!passwordHasher.Verify(password, user.Password))
         {
-            throw new InvalidOperationException("Invalid user credentials.");
+            throw new InvalidCredentialsException();
         }
 
         var accessToken = jwtTokenGenerator.GenerateToken(user.Id, user.Name);
