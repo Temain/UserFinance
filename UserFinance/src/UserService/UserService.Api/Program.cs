@@ -7,6 +7,7 @@ using UserService.Business;
 using UserService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.ConfigureLocalHttpUrl(EnvironmentVariables.UserServicePort);
 
 var postgresOptions = builder.Configuration.GetPostgresOptions();
 var jwtOptions = builder.Configuration.GetJwtOptions();

@@ -7,6 +7,7 @@ using UserFinance.Common.Extensions;
 using UserFinance.Common.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.ConfigureLocalHttpUrl(EnvironmentVariables.FinanceServicePort);
 
 var postgresOptions = builder.Configuration.GetPostgresOptions();
 var jwtOptions = builder.Configuration.GetJwtOptions();
