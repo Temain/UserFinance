@@ -94,5 +94,25 @@ services:
       migration-service:
         condition: service_completed_successfully
 
+  api-gateway:
+    build:
+      context: .
+      dockerfile: src/ApiGateway/ApiGateway/Dockerfile
+    container_name: userfinance-api-gateway
+    environment:
+      JWT_ISSUER: ${JWT_ISSUER:-UserFinance}
+      JWT_AUDIENCE: ${JWT_AUDIENCE:-UserFinance.Client}
+      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY:-super-secret-development-signing-key-12345}
+      JWT_EXPIRES_IN_MINUTES: ${JWT_EXPIRES_IN_MINUTES:-60}
+      USER_SERVICE_URL: http://user-service:8080
+      FINANCE_SERVICE_URL: http://finance-service:8080
+    ports:
+      - "${API_GATEWAY_PORT:-8080}:8080"
+    depends_on:
+      user-service:
+        condition: service_started
+      finance-service:
+        condition: service_started
+
 volumes:
   postgres-data:

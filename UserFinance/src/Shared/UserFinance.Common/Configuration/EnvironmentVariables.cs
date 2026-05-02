@@ -11,10 +11,12 @@ public static class EnvironmentVariables
     public const string JwtAudience = "JWT_AUDIENCE";
     public const string JwtSigningKey = "JWT_SIGNING_KEY";
     public const string JwtExpiresInMinutes = "JWT_EXPIRES_IN_MINUTES";
+    public const string ApiGatewayPort = "API_GATEWAY_PORT";
     public const string UserServicePort = "USER_SERVICE_PORT";
     public const string UserServiceUrl = "USER_SERVICE_URL";
     public const string UserServiceCurrenciesPath = "USER_SERVICE_CURRENCIES_PATH";
     public const string FinanceServicePort = "FINANCE_SERVICE_PORT";
+    public const string FinanceServiceUrl = "FINANCE_SERVICE_URL";
     public const string CbrDailyRatesUrl = "CBR_DAILY_RATES_URL";
     public const string CurrencyUpdaterIntervalMinutes = "CURRENCY_UPDATER_INTERVAL_MINUTES";
 }
