@@ -1,8 +1,8 @@
+using FluentValidation;
 using MediatR;
 using UserService.Api.Extensions;
 using UserService.Api.Requests;
 using UserService.Api.Responses;
-using UserService.Api.Services;
 using UserService.Application.Abstractions.Services;
 using UserService.Application.Commands;
 using UserService.Application.Queries;
@@ -34,13 +34,14 @@ public static class UserCurrencyEndpoints
 
         group.MapPost(string.Empty,
             async (long userId, AddUserCurrencyRequest request, ICurrentUserAccessor currentUserAccessor,
-                ISender sender, CancellationToken cancellationToken) =>
+                IValidator<AddUserCurrencyRequest> validator, ISender sender, CancellationToken cancellationToken) =>
             {
                 if (!currentUserAccessor.HasAccessTo(userId))
                 {
                     return Results.Forbid();
                 }
 
+                await validator.ValidateAndThrowAsync(request, cancellationToken);
                 await sender.Send(new AddUserCurrencyCommand(userId, request.CurrencyId), cancellationToken);
                 return Results.NoContent();
             });

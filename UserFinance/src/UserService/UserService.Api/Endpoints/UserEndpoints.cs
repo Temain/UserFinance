@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using UserService.Api.Extensions;
 using UserService.Api.Requests;
@@ -15,8 +16,11 @@ public static class UserEndpoints
         var group = endpoints.MapGroup("/api/users").WithTags("Users");
 
         group.MapPost(string.Empty,
-            async (RegisterUserRequest request, ISender sender, CancellationToken cancellationToken) =>
+            async (RegisterUserRequest request, IValidator<RegisterUserRequest> validator, ISender sender,
+                CancellationToken cancellationToken) =>
             {
+                await validator.ValidateAndThrowAsync(request, cancellationToken);
+
                 var result = await sender.Send(new RegisterUserCommand(request.Name, request.Password),
                     cancellationToken);
 

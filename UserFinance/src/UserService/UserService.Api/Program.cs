@@ -1,6 +1,5 @@
 using UserFinance.Common.Configuration;
 using UserFinance.Common.Persistence;
-using UserFinance.Common.Security;
 using UserService.Api.Extensions;
 using UserService.Application;
 using UserService.Business;
@@ -16,6 +15,7 @@ builder.Services.AddOpenApiDocumentation();
 builder.Services.AddExceptionHandling();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCurrentUserAccessor();
+builder.Services.AddRequestValidation();
 builder.Services.AddUserApplication();
 builder.Services.AddUserBusiness();
 builder.Services.AddUserPersistence(connectionString);

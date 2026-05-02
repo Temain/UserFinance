@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using UserService.Api.Requests;
 using UserService.Api.Responses;
@@ -11,11 +12,17 @@ public static class AuthEndpoints
     {
         var group = endpoints.MapGroup("/api/auth").WithTags("Auth");
 
-        group.MapPost("/login", async (LoginUserRequest request, ISender sender, CancellationToken cancellationToken) =>
-        {
-            var result = await sender.Send(new LoginUserCommand(request.Name, request.Password), cancellationToken);
-            return Results.Ok(new AuthResponse(result.AccessToken));
-        });
+        group.MapPost("/login",
+            async (LoginUserRequest request, IValidator<LoginUserRequest> validator, ISender sender,
+                CancellationToken cancellationToken) =>
+            {
+                await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+                var result = await sender.Send(new LoginUserCommand(request.Name, request.Password),
+                    cancellationToken);
+
+                return Results.Ok(new AuthResponse(result.AccessToken));
+            });
 
         group.MapPost("/logout", async (ISender sender, CancellationToken cancellationToken) =>
         {
