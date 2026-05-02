@@ -24,7 +24,7 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
         await userRepository.SaveChangesAsync(cancellationToken);
 
         var accessToken = jwtTokenGenerator.GenerateToken(user.Id, user.Name);
-        return new AuthenticationResult(user, accessToken);
+        return new AuthenticationResult(accessToken);
     }
 
     public async Task<AuthenticationResult> LoginAsync(string name, string password,
@@ -39,6 +39,6 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
         }
 
         var accessToken = jwtTokenGenerator.GenerateToken(user.Id, user.Name);
-        return new AuthenticationResult(user, accessToken);
+        return new AuthenticationResult(accessToken);
     }
 }
