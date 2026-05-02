@@ -9,7 +9,8 @@ public interface IUserProfileService
     Task<IReadOnlyCollection<UserCurrency>> GetCurrenciesAsync(long userId,
         CancellationToken cancellationToken = default);
 
-    Task AddCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default);
+    Task AddCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
+        CancellationToken cancellationToken = default);
 
     Task RemoveCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default);
 }

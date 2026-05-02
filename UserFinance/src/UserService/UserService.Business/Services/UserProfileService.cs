@@ -19,12 +19,17 @@ public sealed class UserProfileService(IUserRepository userRepository,
         return await userCurrencyRepository.GetByUserIdAsync(userId, cancellationToken);
     }
 
-    public async Task AddCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
+    public async Task AddCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
+        CancellationToken cancellationToken = default)
     {
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
             ?? throw new UserNotFoundException(userId);
 
-        user.AddCurrency(currencyId);
+        foreach (var currencyId in currencyIds)
+        {
+            user.AddCurrency(currencyId);
+        }
+
         await userRepository.SaveChangesAsync(cancellationToken);
     }
 

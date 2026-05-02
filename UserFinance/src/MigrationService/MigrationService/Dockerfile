@@ -19,7 +19,7 @@ RUN dotnet restore "src/MigrationService/MigrationService/MigrationService.cspro
 COPY . .
 RUN dotnet publish "src/MigrationService/MigrationService/MigrationService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "MigrationService.dll"]

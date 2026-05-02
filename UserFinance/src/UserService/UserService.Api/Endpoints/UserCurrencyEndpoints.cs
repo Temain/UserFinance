@@ -27,11 +27,11 @@ public static class UserCurrencyEndpoints
             }).RequireCurrentUserAccess();
 
         group.MapPost(string.Empty,
-            async (long userId, AddUserCurrencyRequest request, IValidator<AddUserCurrencyRequest> validator,
+            async (long userId, AddUserCurrenciesRequest request, IValidator<AddUserCurrenciesRequest> validator,
                 ISender sender, CancellationToken cancellationToken) =>
             {
                 await validator.ValidateAndThrowAsync(request, cancellationToken);
-                await sender.Send(new AddUserCurrencyCommand(userId, request.CurrencyId), cancellationToken);
+                await sender.Send(new AddUserCurrenciesCommand(userId, request.CurrencyIds), cancellationToken);
                 return Results.NoContent();
             }).RequireCurrentUserAccess();
 

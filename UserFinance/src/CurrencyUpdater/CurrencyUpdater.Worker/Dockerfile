@@ -13,7 +13,7 @@ RUN dotnet restore "src/CurrencyUpdater/CurrencyUpdater.Worker/CurrencyUpdater.W
 COPY . .
 RUN dotnet publish "src/CurrencyUpdater/CurrencyUpdater.Worker/CurrencyUpdater.Worker.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "CurrencyUpdater.Worker.dll"]
