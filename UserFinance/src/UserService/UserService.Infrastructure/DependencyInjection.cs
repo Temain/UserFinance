@@ -19,7 +19,7 @@ public static class DependencyInjection
                     .MigrationsHistoryTable("__EFMigrationsHistory_User")));
 
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserCurrencyRepository, UserCurrencyRepository>();
+        services.AddScoped<IFavoriteCurrencyRepository, FavoriteCurrencyRepository>();
 
         return services;
     }

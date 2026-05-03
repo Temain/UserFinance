@@ -24,9 +24,9 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddUserCurrenciesClient(this IServiceCollection services)
+    public static IServiceCollection AddUserFavoritesClient(this IServiceCollection services)
     {
-        services.AddHttpClient<IUserCurrenciesClient, UserCurrenciesHttpClient>((serviceProvider, client) =>
+        services.AddHttpClient<IUserFavoritesClient, UserFavoritesHttpClient>((serviceProvider, client) =>
         {
             var userServiceOptions = serviceProvider.GetRequiredService<IOptions<UserServiceOptions>>().Value;
             client.BaseAddress = new Uri(userServiceOptions.BaseUrl);

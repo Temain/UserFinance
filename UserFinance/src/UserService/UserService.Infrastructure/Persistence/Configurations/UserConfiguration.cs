@@ -20,9 +20,10 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(user => user.Password).HasColumnName("password").HasMaxLength(500).IsRequired();
 
-        builder.Navigation(user => user.Currencies).UsePropertyAccessMode(PropertyAccessMode.Field);
+        builder.Navigation(user => user.FavoriteCurrencies).UsePropertyAccessMode(PropertyAccessMode.Field);
 
-        builder.HasMany(user => user.Currencies).WithOne().HasForeignKey(userCurrency => userCurrency.UserId)
+        builder.HasMany(user => user.FavoriteCurrencies).WithOne()
+            .HasForeignKey(favoriteCurrency => favoriteCurrency.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

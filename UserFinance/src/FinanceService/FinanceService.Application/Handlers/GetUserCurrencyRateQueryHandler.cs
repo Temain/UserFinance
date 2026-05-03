@@ -10,7 +10,7 @@ public sealed class GetUserCurrencyRateQueryHandler(IFinanceService financeServi
 {
     public async Task<CurrencyRateDto?> Handle(GetUserCurrencyRateQuery request, CancellationToken cancellationToken)
     {
-        var currency = await financeService.GetUserCurrencyAsync(request.UserId, request.CurrencyId, cancellationToken);
+        var currency = await financeService.GetUserFavoriteCurrencyAsync(request.UserId, request.CurrencyId, cancellationToken);
         return currency is null ? null : new CurrencyRateDto(currency.Id, currency.Name, currency.Rate);
     }
 }

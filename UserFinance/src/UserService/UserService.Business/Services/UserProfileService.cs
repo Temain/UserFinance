@@ -6,20 +6,20 @@ using UserService.Domain.Exceptions;
 namespace UserService.Business.Services;
 
 public sealed class UserProfileService(IUserRepository userRepository,
-    IUserCurrencyRepository userCurrencyRepository) : IUserProfileService
+    IFavoriteCurrencyRepository favoriteCurrencyRepository) : IUserProfileService
 {
     public Task<User?> GetByIdAsync(long userId, CancellationToken cancellationToken = default)
     {
         return userRepository.GetByIdAsync(userId, cancellationToken);
     }
 
-    public async Task<IReadOnlyCollection<UserCurrency>> GetCurrenciesAsync(long userId,
+    public async Task<IReadOnlyCollection<FavoriteCurrency>> GetFavoriteCurrenciesAsync(long userId,
         CancellationToken cancellationToken = default)
     {
-        return await userCurrencyRepository.GetByUserIdAsync(userId, cancellationToken);
+        return await favoriteCurrencyRepository.GetByUserIdAsync(userId, cancellationToken);
     }
 
-    public async Task AddCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
+    public async Task AddFavoriteCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
         CancellationToken cancellationToken = default)
     {
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
@@ -27,18 +27,18 @@ public sealed class UserProfileService(IUserRepository userRepository,
 
         foreach (var currencyId in currencyIds)
         {
-            user.AddCurrency(currencyId);
+            user.AddFavoriteCurrency(currencyId);
         }
 
         await userRepository.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task RemoveCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
+    public async Task RemoveFavoriteCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
     {
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
             ?? throw new UserNotFoundException(userId);
 
-        user.RemoveCurrency(currencyId);
+        user.RemoveFavoriteCurrency(currencyId);
         await userRepository.SaveChangesAsync(cancellationToken);
     }
 }

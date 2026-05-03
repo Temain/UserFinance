@@ -6,20 +6,20 @@ using FinanceService.Domain.Entities;
 namespace FinanceService.Business.Services;
 
 public sealed class FinanceService(ICurrencyRepository currencyRepository,
-    IUserCurrenciesClient userCurrenciesClient) : IFinanceService
+    IUserFavoritesClient userFavoritesClient) : IFinanceService
 {
-    public async Task<IReadOnlyCollection<Currency>> GetUserCurrenciesAsync(long userId,
+    public async Task<IReadOnlyCollection<Currency>> GetUserFavoriteCurrenciesAsync(long userId,
         CancellationToken cancellationToken = default)
     {
-        var userCurrencyIds = await userCurrenciesClient.GetUserCurrencyIdsAsync(userId, cancellationToken);
-        return await currencyRepository.GetByIdsAsync(userCurrencyIds, cancellationToken);
+        var favoriteCurrencyIds = await userFavoritesClient.GetUserFavoriteCurrencyIdsAsync(userId, cancellationToken);
+        return await currencyRepository.GetByIdsAsync(favoriteCurrencyIds, cancellationToken);
     }
 
-    public async Task<Currency?> GetUserCurrencyAsync(long userId, int currencyId,
+    public async Task<Currency?> GetUserFavoriteCurrencyAsync(long userId, int currencyId,
         CancellationToken cancellationToken = default)
     {
-        var userCurrencyIds = await userCurrenciesClient.GetUserCurrencyIdsAsync(userId, cancellationToken);
-        if (!userCurrencyIds.Contains(currencyId))
+        var favoriteCurrencyIds = await userFavoritesClient.GetUserFavoriteCurrencyIdsAsync(userId, cancellationToken);
+        if (!favoriteCurrencyIds.Contains(currencyId))
         {
             return null;
         }

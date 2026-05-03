@@ -27,9 +27,9 @@ public sealed class UserServiceExceptionHandler : IExceptionHandler
             {
                 error = userNotFoundException.Message
             }),
-            UserCurrencyAlreadyExistsException userCurrencyAlreadyExistsException => Results.Conflict(new
+            FavoriteCurrencyAlreadyExistsException favoriteCurrencyAlreadyExistsException => Results.Conflict(new
             {
-                error = userCurrencyAlreadyExistsException.Message
+                error = favoriteCurrencyAlreadyExistsException.Message
             }),
             _ => Results.Problem(statusCode: StatusCodes.Status500InternalServerError)
         };

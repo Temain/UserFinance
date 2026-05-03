@@ -5,7 +5,7 @@ namespace UserService.Infrastructure.Security;
 
 public sealed class PasswordHasher : IPasswordHasher
 {
-    private readonly PasswordHasher<object> passwordHasher = new();
+    private readonly PasswordHasher<object> _passwordHasher = new();
 
     public string Hash(string password)
     {
@@ -14,7 +14,7 @@ public sealed class PasswordHasher : IPasswordHasher
             throw new ArgumentException("Password is required.", nameof(password));
         }
 
-        return passwordHasher.HashPassword(new object(), password);
+        return _passwordHasher.HashPassword(new object(), password);
     }
 
     public bool Verify(string password, string passwordHash)
@@ -29,7 +29,7 @@ public sealed class PasswordHasher : IPasswordHasher
             return false;
         }
 
-        var verificationResult = passwordHasher.VerifyHashedPassword(new object(), passwordHash, password);
+        var verificationResult = _passwordHasher.VerifyHashedPassword(new object(), passwordHash, password);
         return verificationResult is PasswordVerificationResult.Success
             or PasswordVerificationResult.SuccessRehashNeeded;
     }

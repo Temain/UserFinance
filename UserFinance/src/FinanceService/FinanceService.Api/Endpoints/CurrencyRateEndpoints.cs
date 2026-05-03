@@ -10,7 +10,7 @@ public static class CurrencyRateEndpoints
 {
     public static IEndpointRouteBuilder MapCurrencyRateEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        var group = endpoints.MapGroup("/api/users/{userId:long}/currency-rates").WithTags("CurrencyRates")
+        var group = endpoints.MapGroup("/api/users/{userId:long}/favorites/rates").WithTags("FavoriteCurrencyRates")
             .RequireAuthorization();
 
         group.MapGet(string.Empty,

@@ -4,8 +4,9 @@ namespace FinanceService.Abstractions.Services;
 
 public interface IFinanceService
 {
-    Task<IReadOnlyCollection<Currency>> GetUserCurrenciesAsync(long userId,
+    Task<IReadOnlyCollection<Currency>> GetUserFavoriteCurrenciesAsync(long userId,
         CancellationToken cancellationToken = default);
 
-    Task<Currency?> GetUserCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default);
+    Task<Currency?> GetUserFavoriteCurrencyAsync(long userId, int currencyId,
+        CancellationToken cancellationToken = default);
 }

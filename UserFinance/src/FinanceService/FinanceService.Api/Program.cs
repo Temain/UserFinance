@@ -21,7 +21,7 @@ builder.Services.AddUserServiceOptions(builder.Configuration);
 builder.Services.AddFinanceApplication();
 builder.Services.AddFinanceBusiness();
 builder.Services.AddFinancePersistence(connectionString);
-builder.Services.AddUserCurrenciesClient();
+builder.Services.AddUserFavoritesClient();
 builder.Services.AddJwtAuthentication(jwtOptions);
 
 var app = builder.Build();

@@ -6,11 +6,11 @@ public interface IUserProfileService
 {
     Task<User?> GetByIdAsync(long userId, CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyCollection<UserCurrency>> GetCurrenciesAsync(long userId,
+    Task<IReadOnlyCollection<FavoriteCurrency>> GetFavoriteCurrenciesAsync(long userId,
         CancellationToken cancellationToken = default);
 
-    Task AddCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
+    Task AddFavoriteCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
         CancellationToken cancellationToken = default);
 
-    Task RemoveCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default);
+    Task RemoveFavoriteCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default);
 }

@@ -7,7 +7,7 @@ public sealed class UserDbContext(DbContextOptions<UserDbContext> options) : DbC
 {
     public DbSet<User> Users => Set<User>();
 
-    public DbSet<UserCurrency> UserCurrencies => Set<UserCurrency>();
+    public DbSet<FavoriteCurrency> FavoriteCurrencies => Set<FavoriteCurrency>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

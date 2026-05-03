@@ -11,7 +11,7 @@ public sealed class GetUserCurrenciesRatesQueryHandler(IFinanceService financeSe
     public async Task<IReadOnlyCollection<CurrencyRateDto>> Handle(GetUserCurrenciesRatesQuery request,
         CancellationToken cancellationToken)
     {
-        var currencies = await financeService.GetUserCurrenciesAsync(request.UserId, cancellationToken);
+        var currencies = await financeService.GetUserFavoriteCurrenciesAsync(request.UserId, cancellationToken);
         return currencies
             .Select(currency => new CurrencyRateDto(currency.Id, currency.Name, currency.Rate))
             .ToArray();

@@ -12,8 +12,8 @@ public static class ConfigurationExtensions
         {
             options.BaseUrl = configuration[EnvironmentVariables.UserServiceUrl] ?? string.Empty;
 
-            options.UserCurrenciesPath = configuration[EnvironmentVariables.UserServiceCurrenciesPath]
-                ?? UserServiceOptions.DefaultUserCurrenciesPath;
+            options.UserFavoritesPath = configuration[EnvironmentVariables.UserServiceFavoritesPath]
+                ?? UserServiceOptions.DefaultUserFavoritesPath;
         });
 
         return services;

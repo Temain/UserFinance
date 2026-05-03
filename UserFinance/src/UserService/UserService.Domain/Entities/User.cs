@@ -4,7 +4,7 @@ namespace UserService.Domain.Entities;
 
 public sealed class User
 {
-    private readonly List<UserCurrency> _currencies = [];
+    private readonly List<FavoriteCurrency> _favoriteCurrencies = [];
 
     private User()
     {
@@ -32,32 +32,32 @@ public sealed class User
 
     public string Password { get; private set; } = null!;
 
-    public IReadOnlyCollection<UserCurrency> Currencies => _currencies.AsReadOnly();
+    public IReadOnlyCollection<FavoriteCurrency> FavoriteCurrencies => _favoriteCurrencies.AsReadOnly();
 
-    public void AddCurrency(int currencyId)
+    public void AddFavoriteCurrency(int currencyId)
     {
         if (currencyId <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(currencyId), "Currency id must be greater than zero.");
         }
 
-        if (_currencies.Any(x => x.CurrencyId == currencyId))
+        if (_favoriteCurrencies.Any(x => x.CurrencyId == currencyId))
         {
-            throw new UserCurrencyAlreadyExistsException(Id, currencyId);
+            throw new FavoriteCurrencyAlreadyExistsException(Id, currencyId);
         }
 
-        _currencies.Add(new UserCurrency(Id, currencyId));
+        _favoriteCurrencies.Add(new FavoriteCurrency(Id, currencyId));
     }
 
-    public void RemoveCurrency(int currencyId)
+    public void RemoveFavoriteCurrency(int currencyId)
     {
-        var userCurrency = _currencies.FirstOrDefault(x => x.CurrencyId == currencyId);
+        var favoriteCurrency = _favoriteCurrencies.FirstOrDefault(x => x.CurrencyId == currencyId);
 
-        if (userCurrency is null)
+        if (favoriteCurrency is null)
         {
             return;
         }
 
-        _currencies.Remove(userCurrency);
+        _favoriteCurrencies.Remove(favoriteCurrency);
     }
 }

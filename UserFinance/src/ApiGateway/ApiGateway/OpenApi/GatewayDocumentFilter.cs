@@ -21,13 +21,14 @@ public sealed class GatewayDocumentFilter : IDocumentFilter
                 "RegisterUserRequest"),
             ["/api/users/{userId}"] = CreateOperationPathItem(OperationType.Get, "Get user profile via gateway.", true, null,
                 "userId"),
-            ["/api/users/{userId}/currencies"] = CreateCurrenciesPathItem(),
-            ["/api/users/{userId}/currencies/{currencyId}"] = CreateOperationPathItem(OperationType.Delete,
-                "Remove a currency from the current user via gateway.", true, null, "userId", "currencyId"),
-            ["/api/users/{userId}/currency-rates"] = CreateOperationPathItem(OperationType.Get,
-                "Get all currency rates for the current user via gateway.", true, null, "userId"),
-            ["/api/users/{userId}/currency-rates/{currencyId}"] = CreateOperationPathItem(OperationType.Get,
-                "Get one currency rate for the current user via gateway.", true, null, "userId", "currencyId")
+            ["/api/users/{userId}/favorites"] = CreateFavoritesPathItem(),
+            ["/api/users/{userId}/favorites/{currencyId}"] = CreateOperationPathItem(OperationType.Delete,
+                "Remove a favorite currency from the current user via gateway.", true, null, "userId", "currencyId"),
+            ["/api/users/{userId}/favorites/rates"] = CreateOperationPathItem(OperationType.Get,
+                "Get all rates for the current user's favorite currencies via gateway.", true, null, "userId"),
+            ["/api/users/{userId}/favorites/rates/{currencyId}"] = CreateOperationPathItem(OperationType.Get,
+                "Get one rate for the current user's favorite currency via gateway.", true, null, "userId",
+                "currencyId")
         };
     }
 
@@ -52,17 +53,17 @@ public sealed class GatewayDocumentFilter : IDocumentFilter
         };
     }
 
-    private static OpenApiPathItem CreateCurrenciesPathItem()
+    private static OpenApiPathItem CreateFavoritesPathItem()
     {
         return new OpenApiPathItem
         {
             Operations =
             {
-                [OperationType.Get] = CreateOperation(OperationType.Get, "Get user currencies via gateway.", true, null,
-                    "userId"),
+                [OperationType.Get] = CreateOperation(OperationType.Get, "Get favorite currencies via gateway.", true,
+                    null, "userId"),
                 [OperationType.Post] = CreateOperation(OperationType.Post,
-                    "Add one or more currencies to the current user via gateway.", true, "AddUserCurrenciesRequest",
-                    "userId")
+                    "Add one or more favorite currencies to the current user via gateway.", true,
+                    "AddUserFavoritesRequest", "userId")
             }
         };
     }
@@ -191,16 +192,16 @@ public sealed class GatewayDocumentFilter : IDocumentFilter
         {
             ["LoginUserRequest"] = CreateAuthRequestSchema(),
             ["RegisterUserRequest"] = CreateAuthRequestSchema(),
-            ["AddUserCurrenciesRequest"] = new()
+            ["AddUserFavoritesRequest"] = new()
             {
                 Type = "object",
                 Required = new HashSet<string>
                 {
-                    "currencyIds"
+                    "favoriteCurrencyIds"
                 },
                 Properties = new Dictionary<string, OpenApiSchema>
                 {
-                    ["currencyIds"] = new()
+                    ["favoriteCurrencyIds"] = new()
                     {
                         Type = "array",
                         Items = new OpenApiSchema

@@ -1,12 +1,12 @@
 namespace UserService.Domain.Entities;
 
-public sealed class UserCurrency
+public sealed class FavoriteCurrency
 {
-    private UserCurrency()
+    private FavoriteCurrency()
     {
     }
 
-    public UserCurrency(long userId, int currencyId)
+    public FavoriteCurrency(long userId, int currencyId)
     {
         if (userId <= 0)
         {

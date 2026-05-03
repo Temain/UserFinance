@@ -8,7 +8,7 @@ public static class EndpointRouteBuilderExtensions
     {
         endpoints.MapAuthEndpoints();
         endpoints.MapUserEndpoints();
-        endpoints.MapUserCurrencyEndpoints();
+        endpoints.MapFavoriteCurrencyEndpoints();
 
         return endpoints;
     }

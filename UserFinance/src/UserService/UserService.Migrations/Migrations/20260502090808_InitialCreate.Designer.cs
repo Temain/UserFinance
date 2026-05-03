@@ -50,7 +50,7 @@ namespace UserService.Migrations.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("UserService.Domain.Entities.UserCurrency", b =>
+            modelBuilder.Entity("UserService.Domain.Entities.FavoriteCurrency", b =>
                 {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint")
@@ -62,13 +62,13 @@ namespace UserService.Migrations.Migrations
 
                     b.HasKey("UserId", "CurrencyId");
 
-                    b.ToTable("user_currency", (string)null);
+                    b.ToTable("favorite", (string)null);
                 });
 
-            modelBuilder.Entity("UserService.Domain.Entities.UserCurrency", b =>
+            modelBuilder.Entity("UserService.Domain.Entities.FavoriteCurrency", b =>
                 {
                     b.HasOne("UserService.Domain.Entities.User", null)
-                        .WithMany("Currencies")
+                        .WithMany("FavoriteCurrencies")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -76,7 +76,7 @@ namespace UserService.Migrations.Migrations
 
             modelBuilder.Entity("UserService.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Currencies");
+                    b.Navigation("FavoriteCurrencies");
                 });
 #pragma warning restore 612, 618
         }

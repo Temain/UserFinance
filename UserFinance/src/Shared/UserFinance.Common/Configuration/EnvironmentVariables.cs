@@ -14,7 +14,7 @@ public static class EnvironmentVariables
     public const string ApiGatewayPort = "API_GATEWAY_PORT";
     public const string UserServicePort = "USER_SERVICE_PORT";
     public const string UserServiceUrl = "USER_SERVICE_URL";
-    public const string UserServiceCurrenciesPath = "USER_SERVICE_CURRENCIES_PATH";
+    public const string UserServiceFavoritesPath = "USER_SERVICE_FAVORITES_PATH";
     public const string FinanceServicePort = "FINANCE_SERVICE_PORT";
     public const string FinanceServiceUrl = "FINANCE_SERVICE_URL";
     public const string CbrDailyRatesUrl = "CBR_DAILY_RATES_URL";

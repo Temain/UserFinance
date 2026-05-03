@@ -2,9 +2,9 @@ namespace FinanceService.Infrastructure.Options;
 
 public sealed class UserServiceOptions
 {
-    public const string DefaultUserCurrenciesPath = "/api/users/{userId}/currencies";
+    public const string DefaultUserFavoritesPath = "/api/users/{userId}/favorites";
 
     public string BaseUrl { get; set; } = string.Empty;
 
-    public string UserCurrenciesPath { get; set; } = DefaultUserCurrenciesPath;
+    public string UserFavoritesPath { get; set; } = DefaultUserFavoritesPath;
 }

@@ -26,7 +26,7 @@ namespace UserService.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "user_currency",
+                name: "favorite",
                 columns: table => new
                 {
                     user_id = table.Column<long>(type: "bigint", nullable: false),
@@ -34,9 +34,9 @@ namespace UserService.Migrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_currency", x => new { x.user_id, x.currency_id });
+                    table.PrimaryKey("PK_favorite", x => new { x.user_id, x.currency_id });
                     table.ForeignKey(
-                        name: "FK_user_currency_user_user_id",
+                        name: "FK_favorite_user_user_id",
                         column: x => x.user_id,
                         principalTable: "user",
                         principalColumn: "id",
@@ -48,7 +48,7 @@ namespace UserService.Migrations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "user_currency");
+                name: "favorite");
 
             migrationBuilder.DropTable(
                 name: "user");

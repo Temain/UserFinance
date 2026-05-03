@@ -10,14 +10,14 @@ public sealed class UserRepository(UserDbContext dbContext) : IUserRepository
     public Task<User?> GetByIdAsync(long userId, CancellationToken cancellationToken = default)
     {
         return dbContext.Users
-            .Include(user => user.Currencies)
+            .Include(user => user.FavoriteCurrencies)
             .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
     }
 
     public Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
     {
         return dbContext.Users
-            .Include(user => user.Currencies)
+            .Include(user => user.FavoriteCurrencies)
             .FirstOrDefaultAsync(user => user.Name == name, cancellationToken);
     }
 
