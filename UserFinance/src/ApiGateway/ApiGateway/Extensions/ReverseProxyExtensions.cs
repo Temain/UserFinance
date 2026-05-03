@@ -45,11 +45,22 @@ public static class ReverseProxyExtensions
             },
             new RouteConfig
             {
-                RouteId = "finance-currency-rates",
+                RouteId = "finance-favorite-currency-rates",
                 ClusterId = "finance-service",
                 Match = new RouteMatch
                 {
-                    Path = "/api/users/{userId}/currency-rates/{**catch-all}"
+                    Path = "/api/users/{userId}/favorites/rates"
+                },
+                AuthorizationPolicy = "default",
+                Order = 0
+            },
+            new RouteConfig
+            {
+                RouteId = "finance-favorite-currency-rate",
+                ClusterId = "finance-service",
+                Match = new RouteMatch
+                {
+                    Path = "/api/users/{userId}/favorites/rates/{currencyId}"
                 },
                 AuthorizationPolicy = "default",
                 Order = 0
