@@ -16,6 +16,7 @@ var connectionString = PostgresConnectionStringFactory.Create(postgresOptions);
 builder.Services.AddOpenApiDocumentation();
 builder.Services.AddExceptionHandling();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddCorrelationId();
 builder.Services.AddCurrentUserAccessor();
 builder.Services.AddUserServiceOptions(builder.Configuration);
 builder.Services.AddFinanceApplication();
@@ -26,6 +27,7 @@ builder.Services.AddJwtAuthentication(jwtOptions);
 
 var app = builder.Build();
 
+app.UseCorrelationId();
 app.UseExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI();

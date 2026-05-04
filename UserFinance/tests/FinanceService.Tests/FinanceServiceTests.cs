@@ -1,5 +1,6 @@
 using FinanceService.Domain.Entities;
 using FinanceService.Tests.Fakes;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 using FinanceDomainService = FinanceService.Business.Services.FinanceService;
 
@@ -15,7 +16,8 @@ public sealed class FinanceServiceTests
             CurrenciesByIds = [new Currency(840, "US Dollar", 80.5m), new Currency(978, "Euro", 92.1m)]
         };
         var userFavoritesClient = new FakeUserFavoritesClient([840, 978]);
-        var service = new FinanceDomainService(currencyRepository, userFavoritesClient);
+        var service = new FinanceDomainService(currencyRepository, userFavoritesClient,
+            NullLogger<FinanceDomainService>.Instance);
 
         var result = await service.GetUserFavoriteCurrenciesAsync(10);
 
@@ -31,7 +33,8 @@ public sealed class FinanceServiceTests
             CurrencyById = new Currency(840, "US Dollar", 80.5m)
         };
         var userFavoritesClient = new FakeUserFavoritesClient([978]);
-        var service = new FinanceDomainService(currencyRepository, userFavoritesClient);
+        var service = new FinanceDomainService(currencyRepository, userFavoritesClient,
+            NullLogger<FinanceDomainService>.Instance);
 
         var result = await service.GetUserFavoriteCurrencyAsync(10, 840);
 
@@ -47,7 +50,8 @@ public sealed class FinanceServiceTests
             CurrencyById = new Currency(840, "US Dollar", 80.5m)
         };
         var userFavoritesClient = new FakeUserFavoritesClient([840, 978]);
-        var service = new FinanceDomainService(currencyRepository, userFavoritesClient);
+        var service = new FinanceDomainService(currencyRepository, userFavoritesClient,
+            NullLogger<FinanceDomainService>.Instance);
 
         var result = await service.GetUserFavoriteCurrencyAsync(10, 840);
 

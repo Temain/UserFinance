@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using UserService.Abstractions.Models;
 using UserService.Business.Services;
 using UserService.Domain.Entities;
@@ -18,7 +19,8 @@ public sealed class UserAuthServiceTests
         };
         var passwordHasher = new FakePasswordHasher();
         var jwtTokenGenerator = new FakeJwtTokenGenerator();
-        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator);
+        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator,
+            NullLogger<UserAuthService>.Instance);
 
         await Assert.ThrowsAsync<UserAlreadyExistsException>(() => service.RegisterAsync("demo", "secret123"));
         Assert.False(userRepository.AddAsyncCalled);
@@ -31,7 +33,8 @@ public sealed class UserAuthServiceTests
         var userRepository = new FakeUserRepository();
         var passwordHasher = new FakePasswordHasher();
         var jwtTokenGenerator = new FakeJwtTokenGenerator();
-        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator);
+        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator,
+            NullLogger<UserAuthService>.Instance);
 
         var result = await service.RegisterAsync("demo", "secret123");
 
@@ -56,7 +59,8 @@ public sealed class UserAuthServiceTests
             VerifyResult = false
         };
         var jwtTokenGenerator = new FakeJwtTokenGenerator();
-        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator);
+        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator,
+            NullLogger<UserAuthService>.Instance);
 
         await Assert.ThrowsAsync<InvalidCredentialsException>(() => service.LoginAsync("demo", "wrong-password"));
     }
