@@ -23,6 +23,7 @@ public static class DependencyInjection
                     .MigrationsHistoryTable("__EFMigrationsHistory_Finance")));
 
         services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+        services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 
         return services;
     }

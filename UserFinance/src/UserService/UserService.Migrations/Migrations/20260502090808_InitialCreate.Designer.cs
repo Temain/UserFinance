@@ -65,6 +65,22 @@ namespace UserService.Migrations.Migrations
                     b.ToTable("favorite", (string)null);
                 });
 
+            modelBuilder.Entity("UserService.Domain.Entities.RevokedToken", b =>
+                {
+                    b.Property<string>("Jti")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("jti");
+
+                    b.Property<DateTime>("ExpiresAtUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at_utc");
+
+                    b.HasKey("Jti");
+
+                    b.ToTable("revoked_token", (string)null);
+                });
+
             modelBuilder.Entity("UserService.Domain.Entities.FavoriteCurrency", b =>
                 {
                     b.HasOne("UserService.Domain.Entities.User", null)

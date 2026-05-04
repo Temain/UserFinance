@@ -16,7 +16,8 @@ public sealed class JwtTokenGenerator(JwtOptions jwtOptions) : IJwtTokenGenerato
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new(JwtRegisteredClaimNames.UniqueName, userName)
+            new(JwtRegisteredClaimNames.UniqueName, userName),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
         };
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SigningKey));

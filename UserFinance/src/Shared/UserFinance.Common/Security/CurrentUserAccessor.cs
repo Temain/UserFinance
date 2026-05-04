@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.AspNetCore.Http;
 
 namespace UserFinance.Common.Security;
@@ -32,6 +33,25 @@ public sealed class CurrentUserAccessor(IHttpContextAccessor httpContextAccessor
             return authorizationHeader.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase)
                 ? authorizationHeader[bearerPrefix.Length..].Trim()
                 : authorizationHeader;
+        }
+    }
+
+    public string? JwtId => httpContextAccessor.HttpContext?.User.FindFirstValue(JwtRegisteredClaimNames.Jti)
+        ?? httpContextAccessor.HttpContext?.User.FindFirstValue("jti");
+
+    public DateTimeOffset? ExpiresAtUtc
+    {
+        get
+        {
+            var value = httpContextAccessor.HttpContext?.User.FindFirstValue(JwtRegisteredClaimNames.Exp)
+                ?? httpContextAccessor.HttpContext?.User.FindFirstValue("exp");
+
+            if (!long.TryParse(value, out var unixTimeSeconds))
+            {
+                return null;
+            }
+
+            return DateTimeOffset.FromUnixTimeSeconds(unixTimeSeconds);
         }
     }
 }

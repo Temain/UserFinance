@@ -32,6 +32,7 @@ app.UseExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
+app.UseRevokedTokenValidation();
 app.UseAuthorization();
 
 app.MapUserServiceEndpoints();

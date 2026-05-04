@@ -23,6 +23,7 @@ public sealed class UserServiceExceptionHandler : IExceptionHandler
             {
                 error = invalidCredentialsException.Message
             }),
+            InvalidTokenException invalidTokenException => Results.Unauthorized(),
             UserNotFoundException userNotFoundException => Results.NotFound(new
             {
                 error = userNotFoundException.Message

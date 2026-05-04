@@ -9,6 +9,8 @@ public sealed class UserDbContext(DbContextOptions<UserDbContext> options) : DbC
 
     public DbSet<FavoriteCurrency> FavoriteCurrencies => Set<FavoriteCurrency>();
 
+    public DbSet<RevokedToken> RevokedTokens => Set<RevokedToken>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserDbContext).Assembly);

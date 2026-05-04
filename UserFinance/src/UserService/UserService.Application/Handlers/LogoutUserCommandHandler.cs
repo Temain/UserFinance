@@ -1,12 +1,16 @@
 using MediatR;
+using UserFinance.Common.Security;
+using UserService.Abstractions.Services;
 using UserService.Application.Commands;
 
 namespace UserService.Application.Handlers;
 
-public sealed class LogoutUserCommandHandler : IRequestHandler<LogoutUserCommand>
+public sealed class LogoutUserCommandHandler(ICurrentUserAccessor currentUserAccessor,
+    IUserAuthService userAuthService) : IRequestHandler<LogoutUserCommand>
 {
-    public Task Handle(LogoutUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(LogoutUserCommand request, CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        await userAuthService.LogoutAsync(currentUserAccessor.JwtId, currentUserAccessor.ExpiresAtUtc,
+            cancellationToken);
     }
 }

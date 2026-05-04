@@ -42,6 +42,18 @@ namespace UserService.Migrations.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "revoked_token",
+                columns: table => new
+                {
+                    jti = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    expires_at_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_revoked_token", x => x.jti);
+                });
         }
 
         /// <inheritdoc />
@@ -49,6 +61,9 @@ namespace UserService.Migrations.Migrations
         {
             migrationBuilder.DropTable(
                 name: "favorite");
+
+            migrationBuilder.DropTable(
+                name: "revoked_token");
 
             migrationBuilder.DropTable(
                 name: "user");

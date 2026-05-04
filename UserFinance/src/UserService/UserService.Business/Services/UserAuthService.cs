@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace UserService.Business.Services;
 
 public sealed class UserAuthService(IUserRepository userRepository, IPasswordHasher passwordHasher,
-    IJwtTokenGenerator jwtTokenGenerator, ILogger<UserAuthService> logger) : IUserAuthService
+    IJwtTokenGenerator jwtTokenGenerator, IRevokedTokenRepository revokedTokenRepository,
+    ILogger<UserAuthService> logger) : IUserAuthService
 {
     public async Task<AuthenticationResult> RegisterAsync(string name, string password,
         CancellationToken cancellationToken = default)
@@ -49,5 +50,22 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
         var accessToken = jwtTokenGenerator.GenerateToken(user.Id, user.Name);
         logger.LogInformation("User {UserName} logged in successfully.", user.Name);
         return new AuthenticationResult(accessToken);
+    }
+
+    public async Task LogoutAsync(string? jwtId, DateTimeOffset? expiresAtUtc,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(jwtId) || expiresAtUtc is null)
+        {
+            throw new InvalidTokenException();
+        }
+
+        logger.LogInformation("Revoking token with jti {JwtId}.", jwtId);
+
+        var revokedToken = new RevokedToken(jwtId, expiresAtUtc.Value.UtcDateTime);
+        await revokedTokenRepository.AddAsync(revokedToken, cancellationToken);
+        await revokedTokenRepository.SaveChangesAsync(cancellationToken);
+
+        logger.LogInformation("Token with jti {JwtId} revoked successfully.", jwtId);
     }
 }

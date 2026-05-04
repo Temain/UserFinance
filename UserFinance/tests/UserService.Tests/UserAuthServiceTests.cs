@@ -17,9 +17,10 @@ public sealed class UserAuthServiceTests
         {
             ExistsByNameResult = true
         };
+        var revokedTokenRepository = new FakeRevokedTokenRepository();
         var passwordHasher = new FakePasswordHasher();
         var jwtTokenGenerator = new FakeJwtTokenGenerator();
-        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator,
+        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator, revokedTokenRepository,
             NullLogger<UserAuthService>.Instance);
 
         await Assert.ThrowsAsync<UserAlreadyExistsException>(() => service.RegisterAsync("demo", "secret123"));
@@ -31,9 +32,10 @@ public sealed class UserAuthServiceTests
     public async Task RegisterAsync_WhenUserIsNew_AddsUserAndReturnsAccessToken()
     {
         var userRepository = new FakeUserRepository();
+        var revokedTokenRepository = new FakeRevokedTokenRepository();
         var passwordHasher = new FakePasswordHasher();
         var jwtTokenGenerator = new FakeJwtTokenGenerator();
-        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator,
+        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator, revokedTokenRepository,
             NullLogger<UserAuthService>.Instance);
 
         var result = await service.RegisterAsync("demo", "secret123");
@@ -58,8 +60,9 @@ public sealed class UserAuthServiceTests
         {
             VerifyResult = false
         };
+        var revokedTokenRepository = new FakeRevokedTokenRepository();
         var jwtTokenGenerator = new FakeJwtTokenGenerator();
-        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator,
+        var service = new UserAuthService(userRepository, passwordHasher, jwtTokenGenerator, revokedTokenRepository,
             NullLogger<UserAuthService>.Instance);
 
         await Assert.ThrowsAsync<InvalidCredentialsException>(() => service.LoginAsync("demo", "wrong-password"));
