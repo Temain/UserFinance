@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Exceptions;
 
 namespace UserService.Api.Exceptions;
@@ -31,6 +32,14 @@ public sealed class UserServiceExceptionHandler : IExceptionHandler
             FavoriteCurrencyAlreadyExistsException favoriteCurrencyAlreadyExistsException => Results.Conflict(new
             {
                 error = favoriteCurrencyAlreadyExistsException.Message
+            }),
+            DbUpdateConcurrencyException => Results.Conflict(new
+            {
+                error = "The resource was modified by another operation."
+            }),
+            DbUpdateException => Results.Conflict(new
+            {
+                error = "The database update failed."
             }),
             _ => Results.Problem(statusCode: StatusCodes.Status500InternalServerError)
         };

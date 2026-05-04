@@ -26,10 +26,8 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
         var user = new User(name, passwordHasher.Hash(password));
 
         await userRepository.AddAsync(user, cancellationToken);
-        await userRepository.SaveChangesAsync(cancellationToken);
 
         var accessToken = jwtTokenGenerator.GenerateToken(user.Id, user.Name);
-        logger.LogInformation("User {UserName} registered successfully with id {UserId}.", user.Name, user.Id);
         return new AuthenticationResult(accessToken);
     }
 
@@ -64,8 +62,5 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
 
         var revokedToken = new RevokedToken(jwtId, expiresAtUtc.Value.UtcDateTime);
         await revokedTokenRepository.AddAsync(revokedToken, cancellationToken);
-        await revokedTokenRepository.SaveChangesAsync(cancellationToken);
-
-        logger.LogInformation("Token with jti {JwtId} revoked successfully.", jwtId);
     }
 }

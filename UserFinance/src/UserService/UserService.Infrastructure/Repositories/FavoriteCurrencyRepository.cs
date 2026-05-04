@@ -15,7 +15,8 @@ public sealed class FavoriteCurrencyRepository(UserDbContext dbContext) : IFavor
             .ToListAsync(cancellationToken);
     }
 
-    public Task<FavoriteCurrency?> GetByIdAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
+    public Task<FavoriteCurrency?> GetByIdAsync(long userId, int currencyId,
+        CancellationToken cancellationToken = default)
     {
         return dbContext.FavoriteCurrencies.FirstOrDefaultAsync(
             favoriteCurrency => favoriteCurrency.UserId == userId && favoriteCurrency.CurrencyId == currencyId,
@@ -37,10 +38,5 @@ public sealed class FavoriteCurrencyRepository(UserDbContext dbContext) : IFavor
     public void Remove(FavoriteCurrency favoriteCurrency)
     {
         dbContext.FavoriteCurrencies.Remove(favoriteCurrency);
-    }
-
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return dbContext.SaveChangesAsync(cancellationToken);
     }
 }

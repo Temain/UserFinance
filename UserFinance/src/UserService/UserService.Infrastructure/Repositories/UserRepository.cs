@@ -30,9 +30,4 @@ public sealed class UserRepository(UserDbContext dbContext) : IUserRepository
     {
         await dbContext.Users.AddAsync(user, cancellationToken);
     }
-
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return dbContext.SaveChangesAsync(cancellationToken);
-    }
 }

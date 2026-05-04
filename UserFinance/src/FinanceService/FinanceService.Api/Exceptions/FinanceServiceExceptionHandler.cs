@@ -1,6 +1,7 @@
 using FluentValidation;
 using FinanceService.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceService.Api.Exceptions;
 
@@ -22,6 +23,14 @@ public sealed class FinanceServiceExceptionHandler : IExceptionHandler
             InvalidOperationException invalidOperationException => Results.BadRequest(new
             {
                 error = invalidOperationException.Message
+            }),
+            DbUpdateConcurrencyException => Results.Conflict(new
+            {
+                error = "The resource was modified by another operation."
+            }),
+            DbUpdateException => Results.Conflict(new
+            {
+                error = "The database update failed."
             }),
             _ => Results.Problem(statusCode: StatusCodes.Status500InternalServerError)
         };

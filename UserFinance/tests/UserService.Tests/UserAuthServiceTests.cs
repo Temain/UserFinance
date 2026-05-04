@@ -25,7 +25,6 @@ public sealed class UserAuthServiceTests
 
         await Assert.ThrowsAsync<UserAlreadyExistsException>(() => service.RegisterAsync("demo", "secret123"));
         Assert.False(userRepository.AddAsyncCalled);
-        Assert.False(userRepository.SaveChangesAsyncCalled);
     }
 
     [Fact]
@@ -42,7 +41,6 @@ public sealed class UserAuthServiceTests
 
         Assert.Equal(new AuthenticationResult("jwt-token"), result);
         Assert.True(userRepository.AddAsyncCalled);
-        Assert.True(userRepository.SaveChangesAsyncCalled);
         Assert.NotNull(userRepository.AddedUser);
         Assert.Equal("hashed-secret123", userRepository.AddedUser!.Password);
         Assert.Equal("demo", userRepository.AddedUser.Name);

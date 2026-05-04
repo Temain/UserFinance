@@ -11,8 +11,6 @@ internal sealed class FakeUserRepository : IUserRepository
 
     public bool ExistsByNameResult { get; init; }
 
-    public bool SaveChangesAsyncCalled { get; private set; }
-
     public User? UserById { get; init; }
 
     public User? UserByName { get; init; }
@@ -38,11 +36,5 @@ internal sealed class FakeUserRepository : IUserRepository
         AddedUser = user;
 
         return Task.CompletedTask;
-    }
-
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        SaveChangesAsyncCalled = true;
-        return Task.FromResult(1);
     }
 }

@@ -11,6 +11,4 @@ public interface IUserRepository
     Task<bool> ExistsByNameAsync(string name, CancellationToken cancellationToken = default);
 
     Task AddAsync(User user, CancellationToken cancellationToken = default);
-
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

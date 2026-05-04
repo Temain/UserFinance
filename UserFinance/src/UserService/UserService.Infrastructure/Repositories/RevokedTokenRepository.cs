@@ -16,9 +16,4 @@ public sealed class RevokedTokenRepository(UserDbContext dbContext) : IRevokedTo
     {
         await dbContext.RevokedTokens.AddAsync(revokedToken, cancellationToken);
     }
-
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return dbContext.SaveChangesAsync(cancellationToken);
-    }
 }

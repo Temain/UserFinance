@@ -1,5 +1,6 @@
 using UserService.Abstractions.Repositories;
 using UserService.Abstractions.Security;
+using UserService.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UserFinance.Common.Security;
@@ -21,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IFavoriteCurrencyRepository, FavoriteCurrencyRepository>();
         services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

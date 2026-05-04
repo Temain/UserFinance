@@ -13,6 +13,4 @@ public interface IFavoriteCurrencyRepository
     Task AddAsync(FavoriteCurrency favoriteCurrency, CancellationToken cancellationToken = default);
 
     void Remove(FavoriteCurrency favoriteCurrency);
-
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

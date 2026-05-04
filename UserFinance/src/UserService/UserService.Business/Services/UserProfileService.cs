@@ -33,19 +33,15 @@ public sealed class UserProfileService(IUserRepository userRepository,
         {
             user.AddFavoriteCurrency(currencyId);
         }
-
-        await userRepository.SaveChangesAsync(cancellationToken);
-        logger.LogInformation("Favorite currencies added for user {UserId}.", userId);
     }
 
-    public async Task RemoveFavoriteCurrencyAsync(long userId, int currencyId, CancellationToken cancellationToken = default)
+    public async Task RemoveFavoriteCurrencyAsync(long userId, int currencyId,
+        CancellationToken cancellationToken = default)
     {
         logger.LogInformation("Removing favorite currency {CurrencyId} for user {UserId}.", currencyId, userId);
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
             ?? throw new UserNotFoundException(userId);
 
         user.RemoveFavoriteCurrency(currencyId);
-        await userRepository.SaveChangesAsync(cancellationToken);
-        logger.LogInformation("Favorite currency {CurrencyId} removed for user {UserId}.", currencyId, userId);
     }
 }
