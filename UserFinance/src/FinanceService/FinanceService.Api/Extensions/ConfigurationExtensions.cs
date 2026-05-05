@@ -14,6 +14,9 @@ public static class ConfigurationExtensions
 
             options.UserFavoritesPath = configuration[EnvironmentVariables.UserServiceFavoritesPath]
                 ?? UserServiceOptions.DefaultUserFavoritesPath;
+
+            options.RevokedTokenPath = configuration[EnvironmentVariables.UserServiceRevokedTokenPath]
+                ?? UserServiceOptions.DefaultRevokedTokenPath;
         });
 
         return services;

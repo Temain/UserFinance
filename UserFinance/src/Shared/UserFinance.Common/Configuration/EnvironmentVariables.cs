@@ -15,6 +15,7 @@ public static class EnvironmentVariables
     public const string UserServicePort = "USER_SERVICE_PORT";
     public const string UserServiceUrl = "USER_SERVICE_URL";
     public const string UserServiceFavoritesPath = "USER_SERVICE_FAVORITES_PATH";
+    public const string UserServiceRevokedTokenPath = "USER_SERVICE_REVOKED_TOKEN_PATH";
     public const string FinanceServicePort = "FINANCE_SERVICE_PORT";
     public const string FinanceServiceUrl = "FINANCE_SERVICE_URL";
     public const string CbrDailyRatesUrl = "CBR_DAILY_RATES_URL";

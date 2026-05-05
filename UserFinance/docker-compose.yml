@@ -71,6 +71,7 @@ services:
       JWT_EXPIRES_IN_MINUTES: ${JWT_EXPIRES_IN_MINUTES:-60}
       USER_SERVICE_URL: http://user-service:8080
       USER_SERVICE_FAVORITES_PATH: /api/users/{userId}/favorites
+      USER_SERVICE_REVOKED_TOKEN_PATH: /internal/tokens/{jti}/revoked
     ports:
       - "${FINANCE_SERVICE_PORT:-8082}:8080"
     depends_on:

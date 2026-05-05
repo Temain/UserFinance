@@ -23,6 +23,7 @@ builder.Services.AddFinanceApplication();
 builder.Services.AddFinanceBusiness();
 builder.Services.AddFinancePersistence(connectionString);
 builder.Services.AddUserFavoritesClient();
+builder.Services.AddRevokedTokenClient();
 builder.Services.AddJwtAuthentication(jwtOptions);
 
 var app = builder.Build();

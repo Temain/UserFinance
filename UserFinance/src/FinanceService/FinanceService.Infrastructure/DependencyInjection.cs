@@ -23,7 +23,6 @@ public static class DependencyInjection
                     .MigrationsHistoryTable("__EFMigrationsHistory_Finance")));
 
         services.AddScoped<ICurrencyRepository, CurrencyRepository>();
-        services.AddScoped<IRevokedTokenRepository, RevokedTokenRepository>();
 
         return services;
     }
@@ -47,7 +46,36 @@ public static class DependencyInjection
                         onRetry: (outcome, delay, retryAttempt, _) =>
                         {
                             logger.LogWarning(
-                                "Retrying request to user service. Attempt {RetryAttempt} after {DelaySeconds} seconds.",
+                                "Retrying request to user service. Attempt {RetryAttempt} after " +
+                                "{DelaySeconds} seconds.",
+                                retryAttempt, delay.TotalSeconds);
+                        });
+            });
+
+        return services;
+    }
+
+    public static IServiceCollection AddRevokedTokenClient(this IServiceCollection services)
+    {
+        services.AddHttpClient<IRevokedTokenClient, RevokedTokenHttpClient>((serviceProvider, client) =>
+            {
+                var userServiceOptions = serviceProvider.GetRequiredService<IOptions<UserServiceOptions>>().Value;
+                client.BaseAddress = new Uri(userServiceOptions.BaseUrl);
+            })
+            .AddPolicyHandler((serviceProvider, _) =>
+            {
+                var logger = serviceProvider.GetRequiredService<ILogger<RevokedTokenHttpClient>>();
+
+                return HttpPolicyExtensions.HandleTransientHttpError()
+                    .Or<TaskCanceledException>()
+                    .WaitAndRetryAsync(
+                        retryCount: 3,
+                        sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                        onRetry: (outcome, delay, retryAttempt, _) =>
+                        {
+                            logger.LogWarning(
+                                "Retrying revoked token request to user service. Attempt {RetryAttempt} after " +
+                                "{DelaySeconds} seconds.",
                                 retryAttempt, delay.TotalSeconds);
                         });
             });

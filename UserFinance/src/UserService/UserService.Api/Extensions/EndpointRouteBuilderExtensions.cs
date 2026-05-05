@@ -9,6 +9,7 @@ public static class EndpointRouteBuilderExtensions
         endpoints.MapAuthEndpoints();
         endpoints.MapUserEndpoints();
         endpoints.MapFavoriteCurrencyEndpoints();
+        endpoints.MapInternalTokenEndpoints();
 
         return endpoints;
     }

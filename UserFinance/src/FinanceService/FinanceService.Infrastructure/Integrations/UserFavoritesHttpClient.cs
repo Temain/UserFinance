@@ -31,7 +31,8 @@ public sealed class UserFavoritesHttpClient(HttpClient httpClient, IOptions<User
 
         if (!string.IsNullOrWhiteSpace(correlationIdAccessor.CorrelationId))
         {
-            request.Headers.TryAddWithoutValidation(CorrelationIdConstants.HeaderName, correlationIdAccessor.CorrelationId);
+            request.Headers.TryAddWithoutValidation(CorrelationIdConstants.HeaderName,
+                correlationIdAccessor.CorrelationId);
         }
 
         HttpResponseMessage response;
@@ -43,13 +44,15 @@ public sealed class UserFavoritesHttpClient(HttpClient httpClient, IOptions<User
         catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
         {
             logger.LogWarning("User service request timed out for user {UserId}.", userId);
-            throw new UserServiceIntegrationException("User service request timed out.", StatusCodes.Status503ServiceUnavailable);
+            throw new UserServiceIntegrationException("User service request timed out.",
+                StatusCodes.Status503ServiceUnavailable);
         }
         catch (HttpRequestException exception)
         {
-            logger.LogWarning(exception, "User service is unavailable while fetching favorites for user {UserId}.", userId);
-            throw new UserServiceIntegrationException("User service is unavailable.", StatusCodes.Status503ServiceUnavailable,
-                exception);
+            logger.LogWarning(exception, "User service is unavailable while fetching favorites for user {UserId}.",
+                userId);
+            throw new UserServiceIntegrationException("User service is unavailable.",
+                StatusCodes.Status503ServiceUnavailable, exception);
         }
 
         using (response)
