@@ -3,7 +3,7 @@ WORKDIR /src
 
 COPY ["UserFinance.sln", "./"]
 COPY ["global.json", "./"]
-COPY ["src/Shared/UserFinance.Common/UserFinance.Common.csproj", "src/Shared/UserFinance.Common/"]
+COPY ["src/Common/UserFinance.Common/UserFinance.Common.csproj", "src/Common/UserFinance.Common/"]
 COPY ["src/ApiGateway/ApiGateway/ApiGateway.csproj", "src/ApiGateway/ApiGateway/"]
 
 RUN dotnet restore "src/ApiGateway/ApiGateway/ApiGateway.csproj"
