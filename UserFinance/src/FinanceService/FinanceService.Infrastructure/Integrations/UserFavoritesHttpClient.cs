@@ -2,10 +2,12 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using FinanceService.Abstractions.Integrations;
 using FinanceService.Domain.Exceptions;
+using FinanceService.Infrastructure.Metrics;
 using FinanceService.Infrastructure.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Prometheus;
 using UserFinance.Common.Observability;
 using UserFinance.Common.Security;
 
@@ -18,6 +20,7 @@ public sealed class UserFavoritesHttpClient(HttpClient httpClient, IOptions<User
     public async Task<IReadOnlyCollection<int>> GetUserFavoriteCurrencyIdsAsync(long userId,
         CancellationToken cancellationToken = default)
     {
+        using var requestTimer = UserServiceMetrics.RequestDuration.WithLabels("favorites").NewTimer();
         var requestPath = userServiceOptions.Value.UserFavoritesPath.Replace("{userId}", userId.ToString());
         using var request = new HttpRequestMessage(HttpMethod.Get, requestPath);
 
@@ -43,12 +46,14 @@ public sealed class UserFavoritesHttpClient(HttpClient httpClient, IOptions<User
         }
         catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
         {
+            UserServiceMetrics.Requests.WithLabels("favorites", "timeout").Inc();
             logger.LogWarning("User service request timed out for user {UserId}.", userId);
             throw new UserServiceIntegrationException("User service request timed out.",
                 StatusCodes.Status503ServiceUnavailable);
         }
         catch (HttpRequestException exception)
         {
+            UserServiceMetrics.Requests.WithLabels("favorites", "unavailable").Inc();
             logger.LogWarning(exception, "User service is unavailable while fetching favorites for user {UserId}.",
                 userId);
             throw new UserServiceIntegrationException("User service is unavailable.",
@@ -59,6 +64,7 @@ public sealed class UserFavoritesHttpClient(HttpClient httpClient, IOptions<User
         {
             if (!response.IsSuccessStatusCode)
             {
+                UserServiceMetrics.Requests.WithLabels("favorites", "bad_status").Inc();
                 logger.LogWarning("User service returned status code {StatusCode} for user {UserId}.",
                     (int)response.StatusCode, userId);
                 throw new UserServiceIntegrationException(
@@ -69,6 +75,7 @@ public sealed class UserFavoritesHttpClient(HttpClient httpClient, IOptions<User
             var favoriteCurrencies = await response.Content.ReadFromJsonAsync<FavoriteCurrencyClientResponse[]>(
                 cancellationToken: cancellationToken);
 
+            UserServiceMetrics.Requests.WithLabels("favorites", "success").Inc();
             logger.LogInformation("Received favorite currencies from user service for user {UserId}.", userId);
 
             return favoriteCurrencies?.Select(favoriteCurrency => favoriteCurrency.CurrencyId).ToArray()

@@ -1,8 +1,10 @@
 using UserService.Abstractions.Repositories;
 using UserService.Abstractions.Services;
+using UserService.Business.Metrics;
 using UserService.Domain.Entities;
 using UserService.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 
 namespace UserService.Business.Services;
 
@@ -24,6 +26,7 @@ public sealed class UserProfileService(IUserRepository userRepository,
     public async Task AddFavoriteCurrenciesAsync(long userId, IReadOnlyCollection<int> currencyIds,
         CancellationToken cancellationToken = default)
     {
+        using var addFavoritesTimer = UserMetrics.AddFavoriteCurrenciesDuration.NewTimer();
         logger.LogInformation("Adding {FavoriteCurrencyCount} favorite currencies for user {UserId}.",
             currencyIds.Count, userId);
         var user = await userRepository.GetByIdAsync(userId, cancellationToken)
@@ -33,6 +36,8 @@ public sealed class UserProfileService(IUserRepository userRepository,
         {
             user.AddFavoriteCurrency(currencyId);
         }
+
+        UserMetrics.FavoriteCurrenciesAdded.Inc(currencyIds.Count);
     }
 
     public async Task RemoveFavoriteCurrencyAsync(long userId, int currencyId,
@@ -43,5 +48,6 @@ public sealed class UserProfileService(IUserRepository userRepository,
             ?? throw new UserNotFoundException(userId);
 
         user.RemoveFavoriteCurrency(currencyId);
+        UserMetrics.FavoriteCurrenciesRemoved.Inc();
     }
 }

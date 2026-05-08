@@ -2,6 +2,7 @@ using FinanceService.Api.Extensions;
 using FinanceService.Infrastructure;
 using FinanceService.Business;
 using FinanceService.Application;
+using Prometheus;
 using UserFinance.Common.Configuration;
 using UserFinance.Common.Extensions;
 using UserFinance.Common.Persistence;
@@ -30,6 +31,7 @@ var app = builder.Build();
 
 app.UseCorrelationId();
 app.UseExceptionHandler();
+app.UseHttpMetrics();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
@@ -37,5 +39,6 @@ app.UseRevokedTokenValidation();
 app.UseAuthorization();
 
 app.MapFinanceServiceEndpoints();
+app.MapMetrics();
 
 app.Run();

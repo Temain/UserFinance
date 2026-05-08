@@ -115,5 +115,22 @@ services:
       finance-service:
         condition: service_started
 
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: userfinance-prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    volumes:
+      - ./devops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    depends_on:
+      user-service:
+        condition: service_started
+      finance-service:
+        condition: service_started
+      api-gateway:
+        condition: service_started
+
 volumes:
   postgres-data:

@@ -1,4 +1,5 @@
 using ApiGateway.Extensions;
+using Prometheus;
 using UserFinance.Common.Configuration;
 using UserFinance.Common.Extensions;
 
@@ -16,6 +17,7 @@ builder.Services.AddApiGatewayReverseProxy(userServiceUrl, financeServiceUrl);
 var app = builder.Build();
 
 app.UseApiGatewaySwagger();
+app.UseHttpMetrics();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapGet("/health", () => Results.Ok(new
@@ -23,6 +25,7 @@ app.MapGet("/health", () => Results.Ok(new
     status = "Healthy"
 }));
 app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapMetrics();
 app.MapReverseProxy();
 
 app.Run();

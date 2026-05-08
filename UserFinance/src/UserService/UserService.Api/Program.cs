@@ -1,6 +1,7 @@
 using UserFinance.Common.Configuration;
 using UserFinance.Common.Extensions;
 using UserFinance.Common.Persistence;
+using Prometheus;
 using UserService.Api.Extensions;
 using UserService.Application;
 using UserService.Business;
@@ -29,6 +30,7 @@ var app = builder.Build();
 
 app.UseCorrelationId();
 app.UseExceptionHandler();
+app.UseHttpMetrics();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
@@ -36,5 +38,6 @@ app.UseRevokedTokenValidation();
 app.UseAuthorization();
 
 app.MapUserServiceEndpoints();
+app.MapMetrics();
 
 app.Run();

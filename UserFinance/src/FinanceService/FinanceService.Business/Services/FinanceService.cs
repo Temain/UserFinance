@@ -1,6 +1,7 @@
 using FinanceService.Abstractions.Integrations;
 using FinanceService.Abstractions.Repositories;
 using FinanceService.Abstractions.Services;
+using FinanceService.Business.Metrics;
 using FinanceService.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -12,6 +13,7 @@ public sealed class FinanceService(ICurrencyRepository currencyRepository,
     public async Task<IReadOnlyCollection<Currency>> GetUserFavoriteCurrenciesAsync(long userId,
         CancellationToken cancellationToken = default)
     {
+        FinanceMetrics.FavoriteRatesRequests.Inc();
         logger.LogInformation("Fetching rates for favorite currencies of user {UserId}.", userId);
         var favoriteCurrencyIds = await userFavoritesClient.GetUserFavoriteCurrencyIdsAsync(userId, cancellationToken);
         return await currencyRepository.GetByIdsAsync(favoriteCurrencyIds, cancellationToken);
@@ -20,10 +22,12 @@ public sealed class FinanceService(ICurrencyRepository currencyRepository,
     public async Task<Currency?> GetUserFavoriteCurrencyAsync(long userId, int currencyId,
         CancellationToken cancellationToken = default)
     {
+        FinanceMetrics.SingleFavoriteRateRequests.Inc();
         logger.LogInformation("Fetching rate for favorite currency {CurrencyId} of user {UserId}.", currencyId, userId);
         var favoriteCurrencyIds = await userFavoritesClient.GetUserFavoriteCurrencyIdsAsync(userId, cancellationToken);
         if (!favoriteCurrencyIds.Contains(currencyId))
         {
+            FinanceMetrics.SingleFavoriteRateMisses.Inc();
             logger.LogInformation("Currency {CurrencyId} is not a favorite for user {UserId}.", currencyId, userId);
             return null;
         }
