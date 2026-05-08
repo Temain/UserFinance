@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{7E7B6D83-4594-4600-BD9D-655D31263713}"
 	ProjectSection(SolutionItems) = preProject
+		devops\grafana\dashboards\domain-overview.json = devops\grafana\dashboards\domain-overview.json
 		devops\grafana\provisioning\datasources\prometheus.yml = devops\grafana\provisioning\datasources\prometheus.yml
 		devops\grafana\provisioning\dashboards\dashboards.yml = devops\grafana\provisioning\dashboards\dashboards.yml
 		devops\grafana\dashboards\system-overview.json = devops\grafana\dashboards\system-overview.json

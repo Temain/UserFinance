@@ -1,5 +1,7 @@
 using CurrencyUpdater.Application.Abstractions;
+using CurrencyUpdater.Application.Metrics;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 
 namespace CurrencyUpdater.Application.Services;
 
@@ -11,6 +13,8 @@ public sealed class CurrencyService(
 {
     public async Task UpdateAsync(CancellationToken cancellationToken = default)
     {
+        using var updateTimer = CurrencyUpdaterMetrics.UpdateDuration.NewTimer();
+        CurrencyUpdaterMetrics.UpdateRuns.Inc();
         logger.LogInformation("Fetching daily currency rates from CBR.");
 
         var xml = await currencyRatesProvider.GetDailyRatesAsync(cancellationToken);
@@ -38,6 +42,8 @@ public sealed class CurrencyService(
 
         await currencyWriteRepository.SaveChangesAsync(cancellationToken);
 
+        CurrencyUpdaterMetrics.UpdatedCurrencies.Inc(currencyRates.Count);
+        CurrencyUpdaterMetrics.LastSuccessfulUpdate.SetToCurrentTimeUtc();
         logger.LogInformation("Currency rates updated successfully.");
     }
 }

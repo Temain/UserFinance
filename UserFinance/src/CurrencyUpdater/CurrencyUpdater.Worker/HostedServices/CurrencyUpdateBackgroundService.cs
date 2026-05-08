@@ -1,5 +1,6 @@
 using CurrencyUpdater.Application.Commands;
 using CurrencyUpdater.Worker.Options;
+using CurrencyUpdater.Worker.Metrics;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -36,6 +37,7 @@ public sealed class CurrencyUpdateBackgroundService(
         }
         catch (Exception exception)
         {
+            CurrencyUpdaterWorkerMetrics.UpdateFailures.Inc();
             logger.LogError(exception, "Currency updater failed to refresh exchange rates.");
         }
     }
