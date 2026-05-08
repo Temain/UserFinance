@@ -18,6 +18,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", 
 		devops\prometheus\prometheus.yml = devops\prometheus\prometheus.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{7E7B6D83-4594-4600-BD9D-655D31263713}"
+	ProjectSection(SolutionItems) = preProject
+		devops\grafana\provisioning\datasources\prometheus.yml = devops\grafana\provisioning\datasources\prometheus.yml
+		devops\grafana\provisioning\dashboards\dashboards.yml = devops\grafana\provisioning\dashboards\dashboards.yml
+		devops\grafana\dashboards\system-overview.json = devops\grafana\dashboards\system-overview.json
+		devops\grafana\dashboards\userfinance-overview.json = devops\grafana\dashboards\userfinance-overview.json
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{C2D6DAB3-5209-410E-B796-B7E5EC569701}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Domain", "src\UserService\UserService.Domain\UserService.Domain.csproj", "{69D7D351-1F2C-4B83-9D53-E768BABAD14A}"
@@ -399,5 +407,6 @@ Global
 		{B3FB99B7-6FA8-433B-815F-EA1C8E1468E1} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{16F2214B-B20A-4156-B34C-B3678174449E} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{F2D4A6D5-4D3D-4B5D-87B3-57088F1B520A} = {A6A93AD5-BFD9-4447-8E6D-9F2217A799D1}
+		{7E7B6D83-4594-4600-BD9D-655D31263713} = {A6A93AD5-BFD9-4447-8E6D-9F2217A799D1}
 	EndGlobalSection
 EndGlobal

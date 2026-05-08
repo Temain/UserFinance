@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: UserFinance
+    orgId: 1
+    folder: UserFinance
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards
