@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging.Abstractions;
-using UserService.Abstractions.Models;
 using UserService.Business.Services;
 using UserService.Domain.Entities;
 using UserService.Domain.Exceptions;
@@ -28,7 +27,7 @@ public sealed class UserAuthServiceTests
     }
 
     [Fact]
-    public async Task RegisterAsync_WhenUserIsNew_AddsUserAndReturnsAccessToken()
+    public async Task RegisterAsync_WhenUserIsNew_AddsUserAndReturnsUser()
     {
         var userRepository = new FakeUserRepository();
         var revokedTokenRepository = new FakeRevokedTokenRepository();
@@ -39,12 +38,11 @@ public sealed class UserAuthServiceTests
 
         var result = await service.RegisterAsync("demo", "secret123");
 
-        Assert.Equal(new AuthenticationResult("jwt-token"), result);
+        Assert.Equal("demo", result.Name);
         Assert.True(userRepository.AddAsyncCalled);
         Assert.NotNull(userRepository.AddedUser);
         Assert.Equal("hashed-secret123", userRepository.AddedUser!.Password);
         Assert.Equal("demo", userRepository.AddedUser.Name);
-        Assert.Equal("demo", jwtTokenGenerator.LastUserName);
     }
 
     [Fact]

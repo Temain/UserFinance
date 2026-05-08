@@ -14,7 +14,7 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
     IJwtTokenGenerator jwtTokenGenerator, IRevokedTokenRepository revokedTokenRepository,
     ILogger<UserAuthService> logger) : IUserAuthService
 {
-    public async Task<AuthenticationResult> RegisterAsync(string name, string password,
+    public async Task<User> RegisterAsync(string name, string password,
         CancellationToken cancellationToken = default)
     {
         UserMetrics.RegisterAttempts.Inc();
@@ -32,8 +32,7 @@ public sealed class UserAuthService(IUserRepository userRepository, IPasswordHas
         await userRepository.AddAsync(user, cancellationToken);
 
         UserMetrics.RegisteredUsers.Inc();
-        var accessToken = jwtTokenGenerator.GenerateToken(user.Id, user.Name);
-        return new AuthenticationResult(accessToken);
+        return user;
     }
 
     public async Task<AuthenticationResult> LoginAsync(string name, string password,
